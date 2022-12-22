@@ -27,8 +27,8 @@ st.markdown(
     """
 This app performs a linear regression from GDP per capita against the stisfaction index from the OECD website.
 * **Python libraries:** base64, numpy, pandas, streamlit, sklearn, matplotlib, seaborn
-* **Data source:** [oecd-satisfaction-index.com](https://stats.oecd.org/index.aspx?DataSetCode=BLI#).
-* **Data source:** [oecd-gdp-per-capita.com](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm).
+* **Data source satisfaction index:** [oecd-satisfaction-index.com](https://stats.oecd.org/index.aspx?DataSetCode=BLI#).
+* **Data source GDP score:** [oecd-gdp-per-capita.com](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm).
 """
 )
 
@@ -67,9 +67,49 @@ def get_figure(x, y, data_frame):
     return fig, ax
 
 
-# Sidebar - Team selection
+# Sidebar - Countries selection
+st.markdown(
+    """
+Remove or add some countries of interest by either clicking the x on the card or clicking into the field of cards whereupon a dropdown menue appears.
+* The graph will be updated accordingly.
+* It is recommended to unselect LUX and IRL which results in a clearly visible change. 
+"""
+)
 locs_sorted = sorted(dat.LOCATION.unique())
-selected_location = st.sidebar.multiselect("Team", locs_sorted, locs_sorted)
+selected_location = st.multiselect(
+    "Countries",
+    locs_sorted,
+    [
+        "AUS",
+        "BEL",
+        "CAN",
+        "CZE",
+        "DNK",
+        "FIN",
+        "FRA",
+        "GRC",
+        "ISL",
+        "IRL",
+        "ITA",
+        "JPN",
+        "KOR",
+        "LUX",
+        "MEX",
+        "NZL",
+        "NOR",
+        "POL",
+        "PRT",
+        "SVK",
+        "CHE",
+        "TUR",
+        "CHL",
+        "ISR",
+        "RUS",
+        "ZAF",
+        "COL",
+        "CRI",
+    ],
+)
 
 # Filtering data
 df_selected_locs = dat[(dat.LOCATION.isin(selected_location))]
@@ -98,12 +138,14 @@ y_fit = model.predict(x_fit[:, np.newaxis])
 
 # Create figure
 fig, ax = get_figure(X, y, df_selected_locs,)
-plt.plot(x_fit, y_fit, c="red", linewidth=0.5)
+plt.plot(x_fit, y_fit, c="red", linewidth=0.5, label="Regression Line")
 plt.scatter(cyprus_gdp_per_capita, cyprus_sat_pred, c="green", s=7)
 plt.plot(
     [cyprus_gdp_per_capita, cyprus_gdp_per_capita],
     [0, cyprus_sat_pred],
     "g--",
     linewidth=0.5,
+    label=f"Prediction Cyprus",
 )
+ax.legend(loc="best")
 st.pyplot(fig)

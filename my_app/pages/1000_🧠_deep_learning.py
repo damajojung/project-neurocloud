@@ -4,11 +4,11 @@ import pandas as pd
 
 st.set_page_config(layout="wide")
 
-st.title("Supervised Machine Learning")
+st.title("Deep Learning")
 
 st.markdown(
     """
-Supervised Machine Learning.
+Deep Learning.
 """
 )
 

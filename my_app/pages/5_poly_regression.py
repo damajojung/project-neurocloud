@@ -6,7 +6,7 @@ import pandas as pd
 
 st.set_page_config(layout="wide")
 
-st.title("Page 3")
+st.title("Polynomial Regression")
 
 st.markdown(
     """

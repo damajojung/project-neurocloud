@@ -10,7 +10,7 @@ st.title("Supervised Machine Learning")
 
 st.markdown(
     """
-My resume.
+Supervised Machine Learning.
 """
 )
 

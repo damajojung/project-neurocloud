@@ -21,7 +21,7 @@ mpl.rc("ytick", labelsize=8)  # y-ticks
 
 st.set_page_config(layout="wide")
 
-st.title("Page 2 - Regression")
+st.title("Regression")
 
 st.markdown(
     """

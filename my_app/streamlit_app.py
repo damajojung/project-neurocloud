@@ -8,8 +8,8 @@ st.title("Introduction")
 
 st.markdown(
     """
-This app performs a linear regression from GDP per capita against the happiness index.
-* **Python libraries:** base64, pandas, streamlit, sci-kit learn
+Welcome to my webpage where I present the wonderful world of machine and deep learning. The saphire sun wishes a pleasant journey!
+* **Python libraries:** base64, pandas, numpy,  streamlit, sci-kit learn
 * **Data source:** [satisfaction.com](https://stats.oecd.org/index.aspx?DataSetCode=BLI#).
 * **Data source:** [GDP.com](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm).
 """

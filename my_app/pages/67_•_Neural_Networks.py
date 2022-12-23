@@ -6,11 +6,11 @@ import pandas as pd
 
 st.set_page_config(layout="wide")
 
-st.title("Resume")
+st.title("Neural Networks")
 
 st.markdown(
     """
-My resume.
+This topic is being discussed in section **Deep Learning.
 """
 )
 

@@ -8,7 +8,7 @@ st.title("Neural Networks")
 
 st.markdown(
     """
-This topic is being discussed in section **Deep Learning.
+This topic is being discussed in section **🧠 Deep Learning**.
 """
 )
 

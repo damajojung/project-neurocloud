@@ -52,15 +52,11 @@ st.dataframe(dat)
 # Creating function for getting plots
 def get_figure(x, y, data_frame):
 
-    # Visualize the data
-    X = x
-    y = y
-
     fig, ax = plt.subplots(1, figsize=(5, 3))
-    ax.scatter(X, y, s=7)
+    ax.scatter(x, y, s=7)
 
     for i, txt in enumerate(data_frame.LOCATION):
-        ax.annotate(txt, (X[i], y[i]), size=5, c="black")
+        ax.annotate(txt, (x[i], y[i]), size=5, c="black")
 
     ax.set_xlabel("GDP per capita (USD)")
     ax.set_ylabel("Life satisfaction")
@@ -127,6 +123,12 @@ model = sklearn.linear_model.LinearRegression(fit_intercept=True)
 # Train the model
 model.fit(X.reshape(-1, 1), y.reshape(-1, 1))
 
+# Get Model Parameters
+t0, t1 = (
+    str(np.round(model.intercept_[0], 2)),
+    str(model.coef_[0][0])[:4] + str(model.coef_[0][0])[-4:],
+)
+
 # Make a prediction for Cyprus
 cyprus_gdp_per_capita = 22587
 X_new = [[cyprus_gdp_per_capita]]  # Cyprus' GDP per capita
@@ -146,6 +148,14 @@ plt.plot(
     "g--",
     linewidth=0.5,
     label=f"Prediction Cyprus",
+)
+plt.text(35000, 3.0, f"$\tSatisfaction = {t0} + GDP * {t1}$", fontsize=8, color="r")
+plt.text(
+    35000,
+    4.0,
+    f"$\tCyprus Prediction  = {np.round(cyprus_sat_pred[0],2)[0]}$",
+    fontsize=8,
+    color="g",
 )
 ax.legend(loc="best")
 st.pyplot(fig)

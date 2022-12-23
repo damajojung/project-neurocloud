@@ -1,5 +1,3 @@
-# This is the third page of the streamlit app.
-
 import streamlit as st
 import numpy as np
 import pandas as pd
@@ -16,8 +14,4 @@ This app performs a linear regression from GDP per capita against the happiness 
 * **Data source:** [GDP.com](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm).
 """
 )
-
-chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-
-st.line_chart(chart_data)
 

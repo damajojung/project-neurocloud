@@ -12,3 +12,6 @@ Regularised Linear Regression.
 """
 )
 
+st.header("Ridge Regression")
+
+st.header("Lasso Regression")

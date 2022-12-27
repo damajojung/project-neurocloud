@@ -32,7 +32,7 @@ mpl.rc("ytick", labelsize=12)
 # Creating function for getting plots
 def get_fig():
 
-    fig, ax = plt.subplots(1, figsize=(5, 3))
+    fig, ax = plt.subplots(1, figsize=(10, 6))
 
     return fig, ax
 
@@ -58,6 +58,7 @@ from sklearn.preprocessing import PolynomialFeatures
 poly_features = PolynomialFeatures(degree=2, include_bias=False)
 X_poly = poly_features.fit_transform(X)
 X[0]
+st.markdown("Check out how to incorporate those numbers into the text.")
 
 X_poly[0]
 

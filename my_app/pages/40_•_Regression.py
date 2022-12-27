@@ -139,7 +139,7 @@ y_fit = model.predict(x_fit[:, np.newaxis])
 
 
 # Create figure
-fig, ax = get_figure(X, y, df_selected_locs,)
+fig, ax = get_figure(X, y, df_selected_locs)
 plt.plot(x_fit, y_fit, c="red", linewidth=0.5, label="Regression Line")
 plt.scatter(cyprus_gdp_per_capita, cyprus_sat_pred, c="green", s=7)
 plt.plot(

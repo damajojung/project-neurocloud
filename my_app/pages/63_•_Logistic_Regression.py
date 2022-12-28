@@ -55,8 +55,8 @@ y_proba = log_reg.predict_proba(X_new)
 decision_boundary = X_new[y_proba[:, 1] >= 0.5][0]
 
 fig, ax = get_figure(X, y)
-plt.plot(X[y == 0], y[y == 0], "bs")
-plt.plot(X[y == 1], y[y == 1], "g^")
+plt.plot(X[y == 0], y[y == 0], "bs")  # blue square
+plt.plot(X[y == 1], y[y == 1], "g^")  # green triangle
 plt.plot([decision_boundary, decision_boundary], [-1, 2], "r:", linewidth=2)
 plt.plot(X_new, y_proba[:, 1], "g-", linewidth=2, label="Iris virginica")
 plt.plot(X_new, y_proba[:, 0], "b--", linewidth=2, label="Not Iris virginica")
@@ -77,7 +77,9 @@ log_reg.fit(X, y)
 x0, x1 = np.meshgrid(
     np.linspace(2.9, 7, 500).reshape(-1, 1), np.linspace(0.8, 2.7, 200).reshape(-1, 1),
 )
-X_new = np.c_[x0.ravel(), x1.ravel()]
+X_new = np.c_[
+    x0.ravel(), x1.ravel()
+]  # Creating a matrix with all the points which lie wihtin the two ranges
 
 y_proba = log_reg.predict_proba(X_new)
 

@@ -29,7 +29,6 @@ def get_figure(x, y, color, light, bold):
 
     ax.set_xlabel("Sepal length")
     ax.set_ylabel("Sepal width")
-    ax.legend()
     return fig, ax
 
 

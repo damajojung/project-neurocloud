@@ -71,7 +71,9 @@ st.pyplot(fig)
 
 X = iris["data"][:, (2, 3)]  # petal length, petal width
 y = (iris["target"] == 2).astype(int)
-log_reg = LogisticRegression(solver="lbfgs", C=10 ** 10, random_state=42)
+log_reg = LogisticRegression(
+    solver="lbfgs", C=10 ** 10, random_state=42
+)  # The higher the level of C, the less the model is regularised
 log_reg.fit(X, y)
 
 x0, x1 = np.meshgrid(
@@ -81,17 +83,17 @@ X_new = np.c_[
     x0.ravel(), x1.ravel()
 ]  # Creating a matrix with all the points which lie wihtin the two ranges
 
-y_proba = log_reg.predict_proba(X_new)
+y_proba = log_reg.predict_proba(X_new)  # Get all the probabilities
 
 fig, ax = get_figure(X[:, 0], X[:, 1])
 plt.plot(X[y == 0, 0], X[y == 0, 1], "bs")
 plt.plot(X[y == 1, 0], X[y == 1, 1], "g^")
 
 zz = y_proba[:, 1].reshape(x0.shape)
-contour = plt.contour(x0, x1, zz, cmap=plt.cm.brg)
+contour = plt.contour(x0, x1, zz, cmap=plt.cm.brg)  # Getting the contour lines
 
 
-left_right = np.array([2.9, 7])
+left_right = np.array([2.9, 7])  # boundries of x values
 boundary = (
     -(log_reg.coef_[0][0] * left_right + log_reg.intercept_[0]) / log_reg.coef_[0][1]
 )

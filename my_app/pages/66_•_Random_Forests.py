@@ -20,7 +20,6 @@ Random Forests.
 """
 )
 
-
 # Get data
 dir = os.getcwd()
 data_dir = dir + "/app_data/possum.csv"
@@ -56,7 +55,7 @@ st.dataframe(comparison)
 
 cm = confusion_matrix(y_test, predictions, labels=rf_model.classes_)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=rf_model.classes_)
-fig, ax = plt.subplots(figsize=(10, 10))
+fig, ax = plt.subplots(figsize=(20, 10))
 disp.plot(ax=ax)
 
 st.pyplot(fig)

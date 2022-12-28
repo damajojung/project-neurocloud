@@ -23,8 +23,8 @@ def get_figure(x, y):
     fig, ax = plt.subplots(1, figsize=(10, 6))
     ax.scatter(x, y, s=7)
 
-    ax.set_xlabel("GDP per capita (USD)")
-    ax.set_ylabel("Life satisfaction")
+    ax.set_xlabel("Petal length")
+    ax.set_ylabel("Petal width")
     return fig, ax
 
 

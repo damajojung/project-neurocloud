@@ -151,3 +151,6 @@ plt.annotate(
 plt.axis([1, 8.5, 0, 1300])
 st.pyplot(fig)
 
+
+# Using Clustering for Image Segmentation could be something that could be interesting to look at
+

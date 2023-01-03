@@ -25,12 +25,56 @@ st.title("Regression")
 
 st.markdown(
     """
-This app performs a linear regression from GDP per capita against the stisfaction index from the OECD website.
+Let's begin with one of the simplest models there is, namely the linear regression.
+This app performs a linear regression using GDP per capita to predict the stisfaction index of a certain country.
+Both datasets are taken from the OECD website. But let's start with the theory behind it. 
 * **Python libraries:** base64, numpy, pandas, streamlit, sklearn, matplotlib, seaborn
 * **Data source satisfaction index:** [oecd-satisfaction-index.com](https://stats.oecd.org/index.aspx?DataSetCode=BLI#).
 * **Data source GDP score:** [oecd-gdp-per-capita.com](https://data.oecd.org/gdp/gross-domestic-product-gdp.htm).
 """
 )
+
+st.subheader("Theory")
+
+st.markdown(
+    r"""
+In simple terms, a linear regression tries to identify whether there is a connection between two or more variables. This can be written as follows:
+
+$ \hat{y} = b_0 + b_1 * x_1 + b_2 * x_2 + ... + b_n * x_n $
+
+Where:
+* $\hat{y}$ is the predicted value
+* $n$ is the number of features
+* $x_i$ is the $i^{th}$ feature value
+* $b_i$ is the $j^{th}$ model parameter including the bias term $b_0$ and the feature weights $b_1$, $b_2$ etc.
+
+In this example, we get the following equation:
+
+$ life\_satisfaction\_index = b_0 + b_1 * GDP\_per capita $
+"""
+)
+
+st.subheader("Training")
+
+st.markdown(
+    r"""
+All we have to do right now is to train the model. In order to do that, one needs a measurement of how well or poorly the model fits the training data. The most common performance measurement used in regression is the Root Mean Square Error (RMSE) which can be seen in the following equation:
+
+$RMSE(\bf{X},h) = \sqrt{ \frac{1}{m} \sum^{m}_{i = 1} (h(\bf{x}^{(i)}) - y^{(i)} )^2}$
+
+"""
+)
+
+st.markdown(
+    r"""
+Even though the RMSE is most of the times the status quo measurement when it come to regression, it might make more sense to take another one under certain conditions. For example, if the data contains a large number of outliers. In such a case, one might consider using the Mean Absolute Error (MAE) which can be seen in the following equation:
+
+$MAE(\bf{X},h) = \frac{1}{m} \sum^{m}_{i = 1} | h(\bf{x}^{(i)}) - y^{(i)} |$
+
+"""
+)
+
+# Check out, how to only make the x bold in the equaitons. Now, everything is bold.
 
 # Get data
 dir = os.getcwd()

@@ -11,6 +11,17 @@ st.set_page_config(layout="wide")
 st.title("Multiple Linear Regression")
 
 st.markdown(
+    r"""
+In section $Regression$, we used one feature variable to make a prediction. However, we can use as many feature variables as we want as it is shown in the following
+equation:
+
+$ \hat{y} = b_0 + b_1 * x_1 + b_2 * x_2 + ... + b_n * x_n $
+
+"""
+)
+
+
+st.markdown(
     """
 Let us assume that there is a certain bush in California which does not like hot weather. Therefore, it can be found in the mountains 
 where the temperatures are lower thoughout the year. Scientist have collected data about the sea level, the height of the bush and the 
@@ -61,6 +72,29 @@ ax.set_zlabel("Size of leafs (mm)")
 
 st.pyplot(fig)
 
+# Compare the variables
+
+st.markdown(
+    r"""
+Since we deal only with 3 variables, we can plot this data nicely. However, if you are dealing with $n$ values, one has to use a visualisation
+and check, which vairables make sense to take into consideration. This can be seen in the following plot. 
+"""
+)
+
+# Compare all the variables
+
+fig = plt.figure(figsize=(5, 5))
+
+fig = sns.pairplot(dat)
+
+st.pyplot(fig)
+
+st.markdown(
+    r"""
+It is clearly visible that all the variables share a linear relationship. Therefore, it makes sense to use all of them. However, if you are dealing with hundrets
+of variables, one has to use a faster way to determine which variables are worthwhile using and which are not. 
+"""
+)
 # Prediction
 
 ols = linear_model.LinearRegression()
@@ -103,3 +137,46 @@ ax2.view_init(elev=24, azim=-51)
 ax3.view_init(elev=60, azim=165)
 
 st.pyplot(fig1)
+
+#################################### Getting statistics
+
+import statsmodels.api as sm
+
+# add constant to predictor variables
+x = sm.add_constant(X)
+
+# fit linear regression model
+model = sm.OLS(y, X).fit()
+
+# view model summary
+summary = model.summary()
+
+st.markdown(
+    """
+The p-values of each variable must be < .05. Therefore, both vairables work in this case. 
+"""
+)
+
+st.text(f"{summary}")
+
+################################### Getting VIF
+
+# Checking for the VIF values of the variables.
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+
+# Creating a dataframe that will contain the names of all the feature variables and their VIFs
+vif = pd.DataFrame()
+vif["Features"] = pd.DataFrame(X).columns
+vif["VIF"] = [
+    variance_inflation_factor(pd.DataFrame(X).values, i)
+    for i in range(pd.DataFrame(X).shape[1])
+]
+vif["VIF"] = round(vif["VIF"], 2)
+vif = vif.sort_values(by="VIF", ascending=False)
+
+st.markdown(
+    """
+The VIF of each variable must be < 5. So both variables work in this case. 
+"""
+)
+st.text(f"{vif}")

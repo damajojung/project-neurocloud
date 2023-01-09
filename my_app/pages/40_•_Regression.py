@@ -153,7 +153,7 @@ st.pyplot(fig)
 
 st.markdown(
     r"""
-We can see that countries with a GDP up to 70'000 dollars have a linear relationship to a certain degree. Ireland and Luxembourg seem to be outliers. There are several ways how to handle outliers which is discussed in 'Regularised Linear Models'. It's time to implement our linear regression. The result can be seen in the following figure. 
+We can see that countries with a GDP up to 70'000 dollars have a linear relationship to a certain degree. Ireland and Luxembourg seem to be outliers. There are several ways how to handle outliers which is discussed in 'Regularised Linear Models'. It's time to implement our linear regression. The result can be seen in the next section. 
 """
 )
 

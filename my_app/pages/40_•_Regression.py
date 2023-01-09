@@ -77,10 +77,26 @@ Several parameters introduced in these equations use common Machine Learning not
 * $y^{i}$ is the corresponding labels to the $i^{th}$ instance.
 * $\bf{X}$ is a matrix containing all the feature values wihtout the labels. Each row represents one instance. 
 * $h$ is the system's prediction function, also called $hypothesis$. If the systems is given an instance's feature vector $\bf{x}^{i}$, a predicted value is outputted: $\hat{y}^{(i)} = h(\bf{x}^{(i)})$
+* $RMSE(\bf{X}, h)$ is the cost function measured of the hypothesis $h$.
+
+With these things in mind, we can move to a real world example.
 """
 )
 
 # Check out, how to only make the x bold in the equaitons. Now, everything is bold.
+
+
+# Example
+
+st.subheader(
+    "Example: Predicting the life satisfaction index with GDP per capita of a country"
+)
+
+st.markdown(
+    r"""
+As mentioned before, we use the GDP per capita measurement of a country in order to predict the life satisfaction index. Both data sets have been taken from the OECD website (https://www.oecd.org/) and were merged on the variable LOCATION. The final data set looks as follows:
+"""
+)
 
 # Get data
 dir = os.getcwd()
@@ -113,12 +129,45 @@ def get_figure(x, y, data_frame):
     return fig, ax
 
 
+### First impression
+
+st.markdown(
+    r"""
+To gain a first impression of the data, it is advisable to plot it if the dimensionality allows it. 
+"""
+)
+
+# Visualize the data
+X = np.array(dat.GDP)
+y = np.array(dat.Satisfaction)
+
+fig, ax = plt.subplots(1, figsize=(5, 3))
+ax.scatter(X, y, s=7)
+
+for i, txt in enumerate(dat.LOCATION):
+    ax.annotate(txt, (X[i], y[i]), size=5, c="black")
+
+ax.set_xlabel("GDP per capita (USD)")
+ax.set_ylabel("Life satisfaction")
+st.pyplot(fig)
+
+st.markdown(
+    r"""
+We can see that countries with a GDP up to 70'000 dollars have a linear relationship to a certain degree. Ireland and Luxembourg seem to be outliers. There are several ways how to handle outliers which is discussed in 'Regularised Linear Models'. It's time to implement our linear regression. The result can be seen in the following figure. 
+"""
+)
+
+st.subheader("Regression")
+
+
 # Sidebar - Countries selection
 st.markdown(
     """
-Remove or add some countries of interest by either clicking the x on the card or clicking into the field of cards whereupon a dropdown menue appears.
+Remove or add some countries of interest by either clicking the x on the red card or clicking into the field of cards whereupon a dropdown menue appears.
 * The graph will be updated accordingly.
 * It is recommended to unselect LUX and IRL which results in a clearly visible change. 
+
+We want to predict the life satisfaction index of Cyprus which has a GDP per capita of 22'587 dollars. The prediction is highlited in green color. The predicted value varies accordingly to the seleted countries which are used for the regression. The equation of the regression and it's regression line is highlited in red. 
 """
 )
 locs_sorted = sorted(dat.LOCATION.unique())

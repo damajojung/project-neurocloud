@@ -71,6 +71,12 @@ Even though the RMSE is most of the times the status quo measurement when it com
 
 $MAE(\bf{X},h) = \frac{1}{m} \sum^{m}_{i = 1} | h(\bf{x}^{(i)}) - y^{(i)} |$
 
+Several parameters introduced in these equations use common Machine Learning notations. Therefore, these must be clarified:
+* $m$ is the number of instances of the data set one is using for the performance measurement (RMSE). If a validation set contains 200 instances, then $m=200$.
+* $x^{i}$ is a vector with all the feature values wihtout labels of the $i^{th}$ instance.
+* $y^{i}$ is the corresponding labels to the $i^{th}$ instance.
+* $\bf{X}$ is a matrix containing all the feature values wihtout the labels. Each row represents one instance. 
+* $h$ is the system's prediction function, also called $hypothesis$. If the systems is given an instance's feature vector $\bf{x}^{i}$, a predicted value is outputted: $\hat{y}^{(i)} = h(\bf{x}^{(i)})$
 """
 )
 

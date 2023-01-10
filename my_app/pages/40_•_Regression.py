@@ -48,7 +48,7 @@ Where:
 * $x_i$ is the $i^{th}$ feature value
 * $b_i$ is the $j^{th}$ model parameter including the bias term $b_0$ and the feature weights $b_1$, $b_2$ etc.
 
-In this example, we get the following equation:
+In this example, $n = 1$ which leads to the following equation:
 
 $ life\_satisfaction\_index = b_0 + b_1 * GDP\_per capita $
 """

@@ -22,7 +22,7 @@ $ \hat{y} = b_0 + b_1 * x_1 + b_2 * x_2 + ... + b_n * x_n $
 
 
 st.markdown(
-    """
+    r"""
 Let us assume that there is a certain bush in California which does not like hot weather. Therefore, it can be found in the mountains 
 where the temperatures are lower thoughout the year. Scientist have collected data about the sea level, the height of the bush and the 
 size of the leafs. The data can be seen in the following data frame.
@@ -46,7 +46,13 @@ x = np.linspace(50, 2000, 100)
 y = m * x + c + np.random.randn(100) * 2 + 150
 z = m * x + c + np.random.randn(100) * 1 + 10
 
-dat = pd.DataFrame({"Sealevel": x, "Height": y, "Leafs": z})
+# Bad data
+y_1 = m * x + c + np.random.randn(100) * 10  # looks random
+y_2 = (m * (x ** 3) + x) / 1000  # Not linear
+
+dat = pd.DataFrame(
+    {"Sealevel": x, "Height": y, "Leafs": z, "Magnesium": y_1, "Caesium": y_2}
+)
 
 X = pd.DataFrame({"sealevel": x, "height": y}).values.reshape(-1, 2)
 
@@ -76,7 +82,7 @@ st.pyplot(fig)
 
 st.markdown(
     r"""
-Since we deal only with 3 variables, we can plot this data nicely. However, if you are dealing with $n$ values, one has to use a visualisation
+Since we deal only with 3 variables, we can plot this data nicely. However, if you are dealing with more than three values, one has to use a visualisation
 and check, which vairables make sense to take into consideration. This can be seen in the following plot. 
 """
 )
@@ -152,7 +158,7 @@ model = sm.OLS(y, X).fit()
 summary = model.summary()
 
 st.markdown(
-    """
+    r"""
 The p-values of each variable must be < .05. Therefore, both vairables work in this case. 
 """
 )
@@ -175,7 +181,7 @@ vif["VIF"] = round(vif["VIF"], 2)
 vif = vif.sort_values(by="VIF", ascending=False)
 
 st.markdown(
-    """
+    r"""
 The VIF of each variable must be < 5. So both variables work in this case. 
 """
 )

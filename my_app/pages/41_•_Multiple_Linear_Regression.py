@@ -24,8 +24,8 @@ $ \hat{y} = b_0 + b_1 * x_1 + b_2 * x_2 + ... + b_n * x_n $
 st.markdown(
     r"""
 Let us assume that there is a certain bush in California which does not like hot weather. Therefore, it can be found in the mountains 
-where the temperatures are lower thoughout the year. Scientist have collected data about the sea level, the height of the bush and the 
-size of the leafs. The data can be seen in the following data frame.
+where the temperatures are lower thoughout the year. Scientist have collected data about the sea level, the height of the bush, the 
+size of the leafs and the concentration of magnesium and caesium in the soil 1 meter apart from the roots. The data can be seen in the following data frame.
 """
 )
 

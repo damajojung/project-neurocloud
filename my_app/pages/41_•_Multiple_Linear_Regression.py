@@ -14,8 +14,6 @@ st.set_page_config(layout="wide")
 
 st.title("Multiple Linear Regression")
 
-st.title("Check out how the numbers get better regarding R2.")
-
 st.markdown(
     r"""
 In section $Regression$, we used one feature variable to make a prediction. However, we can use as many feature variables as we want as it is shown in the following
@@ -25,7 +23,6 @@ $ \hat{y} = b_0 + b_1 * x_1 + b_2 * x_2 + ... + b_n * x_n $
 
 """
 )
-
 
 st.markdown(
     r"""
@@ -75,16 +72,18 @@ y_pred = np.linspace(155, 172.5, 20)  # range of brittleness values
 xx_pred, yy_pred = np.meshgrid(x_pred, y_pred)
 model_viz = np.array([xx_pred.flatten(), yy_pred.flatten()]).T
 
-# Show data as figure
-fig = plt.figure(figsize=(10, 10))
-ax = fig.add_subplot(projection="3d")
+# This is for making a 3D-Plot, but I think this is now unnecessary.
 
-ax.scatter(x, y, z)
-ax.set_xlabel("Sea level (m)")
-ax.set_ylabel("Height (cm)")
-ax.set_zlabel("Size of leafs (mm)")
+# # Show data as figure
+# fig = plt.figure(figsize=(10, 10))
+# ax = fig.add_subplot(projection="3d")
 
-st.pyplot(fig)
+# ax.scatter(x, y, z)
+# ax.set_xlabel("Sea level (m)")
+# ax.set_ylabel("Height (cm)")
+# ax.set_zlabel("Size of leafs (mm)")
+
+# st.pyplot(fig)
 
 # Compare the variables
 

@@ -6,14 +6,17 @@ import seaborn as sns
 import sklearn
 from sklearn import linear_model
 
+np.random.seed(42)
+
 st.set_page_config(layout="wide")
 
 st.title("Polynomial Regression")
 
 st.markdown(
     """
-This app performs a linear regression from GDP per capita against the happiness index.
-* **Python libraries:** base64, pandas, streamlit, sci-kit learn
+This app performs a polynomial regression with toy data. As we have seen in Multiple Linear Regression with the variable 'Caesium Concentration', 
+some relationships are not linear. Therefore, one has to use polynomial regression. 
+* **Python libraries:** numpy, pandas, matplotlib, seaborn, sklearn
 """
 )
 
@@ -48,6 +51,13 @@ plt.xlabel("$x_1$", fontsize=18)
 plt.ylabel("$y$", rotation=0, fontsize=18)
 plt.axis([-3, 3, 0, 10])
 
+st.markdown(
+    """
+When we look at the data in the following figure, it is clearly visible that there is not a linear relationship between $x_1$ and y. 
+Therefore, we have to use a different approach which is a polynomial regression. 
+"""
+)
+
 st.pyplot(fig)
 
 # Machine Learning
@@ -55,17 +65,20 @@ from sklearn.preprocessing import PolynomialFeatures
 
 poly_features = PolynomialFeatures(degree=2, include_bias=False)
 X_poly = poly_features.fit_transform(X)
-X[0]
-st.markdown("Check out how to incorporate those numbers into the text.")
+# X[0]
+st.markdown(
+    """In this fairly easy example, we can see that the polynomial equation should be of degree 2. Therefore, one can use sklearn
+and fit the data which results in the following intercept and coefficients.
+"""
+)
 
-X_poly[0]
-
+# X_poly[0]
 
 from sklearn.linear_model import LinearRegression
 
 lin_reg = LinearRegression()
 lin_reg.fit(X_poly, y)
-lin_reg.intercept_, lin_reg.coef_
+st.text(f"{lin_reg.intercept_, lin_reg.coef_}")
 
 X_new = np.linspace(-3, 3, 100).reshape(100, 1)
 X_new_poly = poly_features.transform(X_new)
@@ -78,6 +91,12 @@ plt.ylabel("$y$", rotation=0, fontsize=18)
 plt.legend(loc="upper left", fontsize=14)
 plt.axis([-3, 3, 0, 10])
 st.pyplot(fig1)
+
+st.markdown(
+    """The high-degree polynomial model is overfitting the model and the linear model unterfitting. Therefore, one has to find the sweet spot between
+    bias-variance trade off. 
+"""
+)
 
 
 # Comparison

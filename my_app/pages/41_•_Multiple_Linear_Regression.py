@@ -8,6 +8,8 @@ from sklearn import linear_model
 import statsmodels.api as sm
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
+np.random.seed(3)
+
 st.set_page_config(layout="wide")
 
 st.title("Multiple Linear Regression")

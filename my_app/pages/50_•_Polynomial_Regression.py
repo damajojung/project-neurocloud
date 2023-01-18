@@ -68,7 +68,8 @@ X_poly = poly_features.fit_transform(X)
 # X[0]
 st.markdown(
     """In this fairly easy example, we can see that the polynomial equation should be of degree 2. Therefore, one can use sklearn
-and fit the data which results in the following intercept and coefficients.
+and fit the data which results in the following intercept and coefficients. One can use this information to plot it which can be seen in the 
+following figure. 
 """
 )
 
@@ -94,10 +95,11 @@ st.pyplot(fig1)
 
 st.markdown(
     """The high-degree polynomial model is overfitting the model and the linear model unterfitting. Therefore, one has to find the sweet spot between
-    bias-variance trade off. 
+    bias-variance trade off. This is no easy task. How can you know whether the polynomial degree of your model is too high or too low? By 
+    comparing the performance on the training as well as testing data, one can gain deeper insights. If the model performs well of the trianing data 
+    but poorly on the validation data, then the model is overfitting. And if the performance is poor on both, then it is underfitting. 
 """
 )
-
 
 # Comparison
 from sklearn.preprocessing import StandardScaler
@@ -126,3 +128,10 @@ plt.xlabel("$x_1$", fontsize=18)
 plt.ylabel("$y$", rotation=0, fontsize=18)
 plt.axis([-3, 3, 0, 10])
 st.pyplot(fig2)
+
+st.markdown(
+    """
+    Page 134 about bias-variance trade off. 
+    Make transition to regularised linear models. Reducing overfitting is to regularize the model. 
+"""
+)

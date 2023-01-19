@@ -111,7 +111,7 @@ st.markdown(
     r"""
 The goal is still to find the coefficients $b_0, ... , b_n$ that minimize the residual sum of squares. However, a reularised term is added 
 to the cost function which is called 'shrinkage penalty' and looks as follows:
-$$\alpha \sum^{m}_{i = 1} \beta^2$$ 
+$$\alpha \sum^{m}_{i = 1} b_i^2$$ 
 """
 )
 
@@ -120,10 +120,10 @@ st.markdown(
 We can see that it is still quadratic. Therefore, it is still possible to find a closed form solution. It should be noted that the shrinkage 
 penalty should only be added during training. Once the model is trained, one should use the unregularised performance measure to evaluate
 the performance of the model. The hyperparameter $\alpha$ controls how much one wants to regularise the model. Setting it to $\alpha = 0$ 
-results in a Linear Regression. The bigger $\alpha$, the closer the weights come to zero which results in a flat line going through the
+results in a Linear Regression. Big $\alpha$ values result in a flat line which goes through the
 mean of the data. The following eqauation shows the whole cost function for the Ridge Regression:
 
-$J(\beta) = MSE(\beta) + \alpha * \frac{1}{2} \sum^{n}_{i = 1} \alpha_i ^2$
+$J(\theta) = MSE(\theta) + \alpha * \frac{1}{2} \sum^{n}_{i = 1} b_i ^2$
 
 Tell something about 1/2
 """

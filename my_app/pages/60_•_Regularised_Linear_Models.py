@@ -73,7 +73,8 @@ st.title("Regularised Linear Regression")
 st.markdown(
     """
 Regularise polynomial models can be achieved by reducing the number of polynomial degrees. Linear models on the other hand can be regularised by 
-constrining the weights of the model. Regularisation forces the model not only to fit the data but also keep the weights as small as possible. 
+constraining the weights of the model. This helps to avoid overfitting the data Regularisation forces the model not only to fit the data but also keep the weights as small
+ as possible. 
 Two version of regularised linear models will be discussed in this section, namely the Ridge Regression (also Tikhonov regularisation) and
 the Lasso Regression. 
 """
@@ -160,6 +161,14 @@ st.pyplot(fig)
 
 st.header("Lasso Regression")
 
+st.markdown(
+    r"""
+
+
+$J(\theta) = MSE(\theta) + \alpha * \frac{1}{2} \sum^{n}_{i = 1} | b_i | $
+
+"""
+)
 
 from sklearn.linear_model import Lasso
 

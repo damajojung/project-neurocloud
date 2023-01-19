@@ -72,7 +72,10 @@ st.title("Regularised Linear Regression")
 
 st.markdown(
     """
-Regularised Linear Regression.
+Regularise polynomial models can be achieved by reducing the number of polynomial degrees. Linear models on the other hand can be regularised by 
+constrining the weights of the model. Regularisation forces the model not only to fit the data but also keep the weights as small as possible. 
+Two version of regularised linear models will be discussed in this section, namely the Ridge Regression (also Tikhonov regularisation) and
+the Lasso Regression. 
 """
 )
 
@@ -80,25 +83,51 @@ Regularised Linear Regression.
 # Machine Learning
 #########################
 
-X = np.array(dat.GDP)
-y = np.array(dat.Satisfaction)
+# I don't think that this section is useful anymore.
+# X = np.array(dat.GDP)
+# y = np.array(dat.Satisfaction)
 
-# Select a linear model
-model = sklearn.linear_model.LinearRegression(fit_intercept=True)
+# # Select a linear model
+# model = sklearn.linear_model.LinearRegression(fit_intercept=True)
 
-# Train the model
-model.fit(X.reshape(-1, 1), y.reshape(-1, 1))
+# # Train the model
+# model.fit(X.reshape(-1, 1), y.reshape(-1, 1))
 
-x_fit = np.linspace(min(X), max(X), 41)
-y_fit = model.predict(x_fit[:, np.newaxis])
+# x_fit = np.linspace(min(X), max(X), 41)
+# y_fit = model.predict(x_fit[:, np.newaxis])
 
-# Create figure
-fig, ax = get_figure(X, y)
-plt.plot(x_fit, y_fit, c="red", linewidth=0.5, label="Regression Line")
-ax.legend(loc="best")
-st.pyplot(fig)
+# # Create figure
+# fig, ax = get_figure(X, y)
+# plt.plot(x_fit, y_fit, c="red", linewidth=0.5, label="Regression Line")
+# ax.legend(loc="best")
+# st.pyplot(fig)
+
+#########################
+
 
 st.header("Ridge Regression")
+
+st.markdown(
+    r"""
+The goal is still to find the coefficients $b_0, ... , b_n$ that minimize the residual sum of squares. However, a reularised term is added 
+to the cost function which is called 'shrinkage penalty' and looks as follows:
+$$\alpha \sum^{m}_{i = 1} \beta^2$$ 
+"""
+)
+
+st.markdown(
+    r"""
+We can see that it is still quadratic. Therefore, it is still possible to find a closed form solution. It should be noted that the shrinkage 
+penalty should only be added during training. Once the model is trained, one should use the unregularised performance measure to evaluate
+the performance of the model. The hyperparameter $\alpha$ controls how much one wants to regularise the model. Setting it to $\alpha = 0$ 
+results in a Linear Regression. The bigger $\alpha$, the closer the weights come to zero which results in a flat line going through the
+mean of the data. The following eqauation shows the whole cost function for the Ridge Regression:
+
+$J(\beta) = MSE(\beta) + \alpha * \frac{1}{2} \sum^{n}_{i = 1} \alpha_i ^2$
+
+Tell something about 1/2
+"""
+)
 
 from sklearn.linear_model import Ridge
 

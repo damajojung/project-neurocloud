@@ -10,6 +10,12 @@ from sklearn.linear_model import LinearRegression
 import matplotlib as mpl
 import seaborn as sns
 
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import Lasso
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.preprocessing import StandardScaler
+
 
 plt.style.use(["default"])
 
@@ -130,8 +136,6 @@ Tell something about 1/2
 """
 )
 
-from sklearn.linear_model import Ridge
-
 x_fit = np.linspace(min(X), max(X), 41)
 
 
@@ -163,14 +167,16 @@ st.header("Lasso Regression")
 
 st.markdown(
     r"""
-
+Lasso stands for 'Least Absolute Shrinkage and Selection Operator' and is another regularised version of Linear Regression. A regularisation term is added to
+the cost function. This time, the $l_1$ norm of the weight vector is used insted of the square ($l-2$ norm) in ridge regression. The Lasso Regression cost
+function looks as follows:
 
 $J(\theta) = MSE(\theta) + \alpha * \frac{1}{2} \sum^{n}_{i = 1} | b_i | $
 
+It has to be mentioned that an interesting of Lasso Regression is that there is a tendency to eliminate the weights of the least important feature by setting it to 
+zero which results in a feature selection and thus to a sparse model. 
 """
 )
-
-from sklearn.linear_model import Lasso
 
 x_fit = np.linspace(min(X), max(X), 41)
 
@@ -181,3 +187,64 @@ fig1, ax1 = get_figure(X, y)
 plot_model(Lasso, alphas=(0, 3, 3.7), random_state=42)
 
 st.pyplot(fig1)
+
+
+st.markdown(
+    r"""
+Lets make this visible with higher polynomial regression. 
+"""
+)
+
+np.random.seed(42)
+
+m = 100
+X = 6 * np.random.rand(m, 1) - 3
+y = (
+    (X ** 5)
+    + (X ** 4)
+    - 2 * (X ** 3)
+    - 10 * (X ** 2)
+    + (3 * X)
+    + np.random.randn(m, 1)
+    + np.random.normal(0, 40, m).reshape(m, 1)
+)
+X_new = np.linspace(-3, 3, 100).reshape(100, 1)
+
+
+def plot_model(model_class, polynomial, alphas, **model_kargs):
+    for alpha, style in zip(alphas, ("b-", "g--", "r:")):
+        model = model_class(alpha, **model_kargs) if alpha > 0 else LinearRegression()
+        if polynomial:
+            model = Pipeline(
+                [
+                    (
+                        "poly_features",
+                        PolynomialFeatures(degree=17, include_bias=False),
+                    ),
+                    ("std_scaler", StandardScaler()),
+                    ("regul_reg", model),
+                ]
+            )
+        model.fit(X, y)
+        y_new_regul = model.predict(X_new)
+        lw = 2 if alpha > 0 else 1
+        plt.plot(
+            X_new,
+            y_new_regul,
+            style,
+            linewidth=lw,
+            label=r"$\alpha = {}$".format(alpha),
+        )
+    plt.plot(X, y, "b.", linewidth=3)
+    plt.legend(loc="upper left", fontsize=15)
+    plt.xlabel("$x_1$", fontsize=18)
+
+
+fig2 = plt.figure(figsize=(8, 4))
+plt.subplot(121)
+plot_model(Ridge, polynomial=True, alphas=(0, 1, 100), random_state=42)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.subplot(122)
+plot_model(Lasso, polynomial=True, alphas=(0, 0.5, 1), random_state=42)
+
+st.pyplot(fig2)

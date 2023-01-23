@@ -13,9 +13,36 @@ st.title("Logistic Regression")
 
 st.markdown(
     """
-Logistic Regression.
+So far we have worked with regression which predicts a continuous output given inputs. With logistic regression, we work for the first time 
+on a classification task which predicts a discrete ouput given inputs. Classification task discussed on this website are Logistic regression, k-nearest
+neighbours, decision threes and ranrom forests. Lets start with logistic regression and a dataset that needs no introduction in the ML world, namely the
+iris dataset. For the people who never heard of this dataset, allow me to introduce it. All the other ones can skip the following passage. 
 """
 )
+
+st.subheader("Iris Dataset")
+
+st.markdown(
+    """
+Three variations of Iris flowers are contained within the dataset with the following attributes: For each flower there is a petal and sepal length and width
+which leads to a total of four attributes for each flower. The three different variations of Iris are Setosa, Versicolor and Virginica and are stored
+in the dataset as 0,1 and 2. The head of the dataset looks as follows:
+"""
+)
+
+test = datasets.load_iris(as_frame=True)
+test_df = test["data"]
+test_df["Species"] = test["target"].astype(int)
+st.dataframe(test_df)
+
+st.markdown(
+    """
+With the data in mind, we can now proceed to the theory behind logistic regression. 
+"""
+)
+
+st.subheader("Theory of Logistic Regression")
+
 # Functions
 # Creating function for getting plots
 def get_figure(x, y):

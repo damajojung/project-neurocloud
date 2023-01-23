@@ -173,7 +173,7 @@ function looks as follows:
 
 $J(\theta) = MSE(\theta) + \alpha * \frac{1}{2} \sum^{n}_{i = 1} | b_i | $
 
-It has to be mentioned that an interesting of Lasso Regression is that there is a tendency to eliminate the weights of the least important feature by setting it to 
+It has to be mentioned that an interesting aspect of Lasso Regression is that there is a tendency to eliminate the weights of the least important feature by setting it to 
 zero which results in a feature selection and thus to a sparse model. 
 """
 )
@@ -191,7 +191,9 @@ st.pyplot(fig1)
 
 st.markdown(
     r"""
-Lets make this visible with higher polynomial regression. 
+The effect of the regularisation becomes more visible with higher degrees. On the left hand side, we can see the Ridge regression and on the right
+hand side the Lasso regression with different $\alpha$. In genereal, they behave similar with the given data. It is clearly visible that a bigger
+$\alpha$ leads to a smoother regression line. 
 """
 )
 

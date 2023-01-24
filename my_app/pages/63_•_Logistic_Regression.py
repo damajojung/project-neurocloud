@@ -13,20 +13,20 @@ st.title("Logistic Regression")
 
 st.markdown(
     """
-So far we have worked with regression which predicts a continuous output given inputs. With logistic regression, we work for the first time 
-on a classification task which predicts a discrete ouput given inputs. Classification task discussed on this website are Logistic regression, k-nearest
+So far we have worked with regression models which predict a continuous output given inputs. With logistic regression, we work for the first time 
+on a classification task which predicts a discrete ouput given inputs. The Classification tasks discussed on this website are Logistic regression, k-nearest
 neighbours, decision threes and ranrom forests. Lets start with logistic regression and a dataset that needs no introduction in the ML world, namely the
 iris dataset. For the people who never heard of this dataset, allow me to introduce it. All the other ones can skip the following passage. 
 """
 )
 
-st.subheader("Iris Dataset")
+st.header("Iris Dataset")
 
 st.markdown(
     """
 Three variations of Iris flowers are contained within the dataset with the following attributes: For each flower there is a petal and sepal length and width
 which leads to a total of four attributes for each flower. The three different variations of Iris are Setosa, Versicolor and Virginica and are stored
-in the dataset as 0,1 and 2. The head of the dataset looks as follows:
+in the dataset as 0,1 and 2. The dataset looks as follows:
 """
 )
 
@@ -41,7 +41,42 @@ With the data in mind, we can now proceed to the theory behind logistic regressi
 """
 )
 
-st.subheader("Theory of Logistic Regression")
+st.header("Theory of Logistic Regression")
+
+st.markdown(
+    """
+With logistic regression the probability that an instance belongs to a certain class is estimated. If the estimate is greater than 50%, then the model predicts that the 
+instance belongs to that class which is referred to as *positive class* label with label 1. If it is predicted as not belonging to that class it is called *negative class* with 
+label 0. Therefore, logistic regression is a binary classifier. This begs the question how logistic regression estimated probabilities? Same as in Linear Regression models, 
+a Logistic Regression model computed the weighted sum of input features with a bias term. However, instead of outputting the results dierectly, the logistic of this result is
+used. Therefore, it is bounded between 0 and 1 and is flexible to change the position or the steepness of thed curve which we will see in a short time.
+"""
+)
+
+st.markdown(
+    r"""
+The probability that a certain instance belongs to class 1 can be written as follows:
+
+$p(C_1, X) \approx \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$
+
+The odds are:
+
+$\frac{p(x)}{1 - p(X)} \approx e^{\beta_0 + \beta_1X}$
+
+And the logg-odds (logit):
+
+$log(\frac{p(X)}{1-p(X)}) \approx \beta_0 + \beta_1X$
+"""
+)
+
+st.subheader("Estimate Coefficients: Maximum likelihood")
+
+st.markdown(
+    """
+Let's go!
+"""
+)
+
 
 # Functions
 # Creating function for getting plots

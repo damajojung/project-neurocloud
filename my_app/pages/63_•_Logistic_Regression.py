@@ -66,8 +66,125 @@ $\frac{p(x)}{1 - p(X)} \approx e^{\beta_0 + \beta_1X}$
 And the logg-odds (logit):
 
 $log(\frac{p(X)}{1-p(X)}) \approx \beta_0 + \beta_1X$
+
+Let me illustrate the impact of different $\beta_0$ and $\beta_1$.
 """
 )
+
+########################## Illustrate the impacts of beta_0 and beta_1
+
+##### 1
+
+x = np.linspace(-5, 5, 50)
+beta_0 = 0
+beta_1 = 1
+term = np.exp(beta_0 + beta_1 * x)
+
+sig = term / (1 + term)
+fig = plt.figure(figsize=(9, 3))
+plt.plot([-5, 5], [0, 0], "k-")
+plt.plot([-5, 5], [0.5, 0.5], "k:")
+plt.plot([-5, 5], [1, 1], "k:")
+plt.plot([0, 0], [-1.1, 1.1], "k-")
+plt.plot(
+    x,
+    sig,
+    "b-",
+    linewidth=2,
+    label=r"$p(C_1, X) \approx \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$",
+)
+plt.xlabel("X")
+plt.legend(loc="upper left", fontsize=17)
+plt.axis([-5, 5, -0.1, 1.1])
+
+beta_0 = -1
+beta_1 = 1
+term = np.exp(beta_0 + beta_1 * x)
+sig = term / (1 + term)
+plt.plot(x, sig, "r-", linewidth=2)
+
+plt.text(2.25, 0.37, r"$\beta_0$", fontsize=14, color="r", ha="center")
+plt.arrow(2, 0.4, -0.5, 0, head_width=0.05, head_length=0.1, fc="r", ec="r")
+plt.arrow(2.5, 0.4, 0.5, 0, head_width=0.05, head_length=0.1, fc="r", ec="r")
+
+st.pyplot(fig)
+
+
+#### 2
+
+x = np.linspace(-5, 5, 50)
+beta_0 = 0
+beta_1 = 1
+term = np.exp(beta_0 + beta_1 * x)
+
+sig = term / (1 + term)
+fig = plt.figure(figsize=(9, 3))
+plt.plot([-5, 5], [0, 0], "k-")
+plt.plot([-5, 5], [0.5, 0.5], "k:")
+plt.plot([-5, 5], [1, 1], "k:")
+plt.plot([0, 0], [-1.1, 1.1], "k-")
+plt.plot(
+    x,
+    sig,
+    "b-",
+    linewidth=2,
+    label=r"$p(C_1, X) \approx \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$",
+)
+plt.xlabel("X")
+plt.legend(loc="upper left", fontsize=17)
+plt.axis([-5, 5, -0.1, 1.1])
+
+beta_0 = 0
+beta_1 = 4.0
+term = np.exp(beta_0 + beta_1 * x)
+sig = term / (1 + term)
+plt.plot(x, sig, "g-", linewidth=2)
+
+plt.text(2, 0.39, r"$\beta_1$", fontsize=14, color="g", ha="center")
+plt.arrow(2, 0.53, 0, 0.1, head_width=0.15, head_length=0.1, fc="g", ec="g")
+plt.arrow(2, 0.32, 0, -0.1, head_width=0.15, head_length=0.1, fc="g", ec="g")
+
+plt.arrow(2.3, 0.53, 0.5, 0.15, head_width=0.1, head_length=0.1, fc="b", ec="g")
+plt.arrow(1.7, 0.32, -0.5, -0.15, head_width=0.1, head_length=0.1, fc="b", ec="g")
+
+st.pyplot(fig)
+
+
+### 3
+
+x = np.linspace(-5, 5, 50)
+beta_0 = 0
+beta_1 = 1
+term = np.exp(beta_0 + beta_1 * x)
+
+sig = term / (1 + term)
+fig = plt.figure(figsize=(9, 3))
+plt.plot([-5, 5], [0, 0], "k-")
+plt.plot([-5, 5], [0.5, 0.5], "k:")
+plt.plot([-5, 5], [1, 1], "k:")
+plt.plot([0, 0], [-1.1, 1.1], "k-")
+plt.plot(
+    x,
+    sig,
+    "b-",
+    linewidth=2,
+    label=r"$p(C_1, X) \approx \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$",
+)
+plt.xlabel("X")
+plt.legend(loc="upper left", fontsize=17)
+plt.axis([-5, 5, -0.1, 1.1])
+
+beta_0 = 0
+beta_1 = 0.05
+term = np.exp(beta_0 + beta_1 * x)
+sig = term / (1 + term)
+plt.plot(x, sig, "y-", linewidth=2)
+
+plt.text(2.25, 0.37, r"$low \, \beta_0$", fontsize=14, color="y", ha="center")
+plt.arrow(1.7, 0.4, -0.5, 0, head_width=0.05, head_length=0.1, fc="y", ec="y")
+plt.arrow(2.8, 0.4, 0.5, 0, head_width=0.05, head_length=0.1, fc="y", ec="y")
+
+st.pyplot(fig)
 
 st.subheader("Estimate Coefficients: Maximum likelihood")
 

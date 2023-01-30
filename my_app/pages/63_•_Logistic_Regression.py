@@ -189,8 +189,19 @@ st.pyplot(fig)
 st.subheader("Estimate Coefficients: Maximum likelihood")
 
 st.markdown(
-    """
-Let's go!
+    r"""
+With Linear Regression there is a closed-form solution for the optimiztion problem since least squares results in minimizing a quadratic function. However, closed-form
+solution is hard to obtain with a logistic function. The goal is to find a model that macimizes the probability of observing the data at hand. This is being done with 
+maximum likelihood with the following likelihoof function:
+
+$\ell(\beta_0, \beta_1) = \prod_{i \in C_1}^{} p(C_1 | x_i) \prod_{i \in C_2}^{} (1-p(C_1 | x_i))$
+
+This likelihood function describes the probability that data $X_1 \in C_1$ and $X_2 \in C_2$ is observed given the parameters $\beta_0, \beta_1$. Now, one has to
+compute $\beta_0, \beta_1$ that maximize $\ell(\beta_0, \beta_1)$ which equivalent to minimizing the negative log-likelihood (error function, cross-entropy error):
+
+$\mathcal{L}(\beta_0, \beta_1) = - \sum_{i \in C_1}^{} log(p(X_i)) - \sum_{i \in C_2}^{} log(1 - p(x_i))$
+
+Goal: Compute $(\beta_0, \beta_1)$ that minimize the log-likelihood. 
 """
 )
 

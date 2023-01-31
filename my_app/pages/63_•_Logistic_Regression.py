@@ -144,8 +144,8 @@ plt.text(2, 0.39, r"$\beta_1$", fontsize=14, color="g", ha="center")
 plt.arrow(2, 0.53, 0, 0.1, head_width=0.15, head_length=0.1, fc="g", ec="g")
 plt.arrow(2, 0.32, 0, -0.1, head_width=0.15, head_length=0.1, fc="g", ec="g")
 
-plt.arrow(2.3, 0.53, 0.5, 0.15, head_width=0.1, head_length=0.1, fc="b", ec="g")
-plt.arrow(1.7, 0.32, -0.5, -0.15, head_width=0.1, head_length=0.1, fc="b", ec="g")
+plt.arrow(2.3, 0.53, 0.5, 0.15, head_width=0.1, head_length=0.1, fc="b", ec="b")
+plt.arrow(1.7, 0.32, -0.5, -0.15, head_width=0.1, head_length=0.1, fc="b", ec="b")
 
 st.pyplot(fig)
 
@@ -190,9 +190,9 @@ st.subheader("Estimate Coefficients: Maximum likelihood")
 
 st.markdown(
     r"""
-With Linear Regression there is a closed-form solution for the optimiztion problem since least squares results in minimizing a quadratic function. However, closed-form
-solution is hard to obtain with a logistic function. The goal is to find a model that macimizes the probability of observing the data at hand. This is being done with 
-maximum likelihood with the following likelihoof function:
+With Linear Regression there is a closed-form solution for the optimiztion problem since least squares results in minimizing a quadratic function. However, a closed-form
+solution is hard to obtain with a logistic function. The goal is to find a model that maximizes the probability of observing the data at hand. This is being done with 
+maximum likelihood with the following likelihood function:
 
 $\ell(\beta_0, \beta_1) = \prod_{i \in C_1}^{} p(C_1 | x_i) \prod_{i \in C_2}^{} (1-p(C_1 | x_i))$
 
@@ -201,10 +201,23 @@ compute $\beta_0, \beta_1$ that maximize $\ell(\beta_0, \beta_1)$ which equivale
 
 $\mathcal{L}(\beta_0, \beta_1) = - \sum_{i \in C_1}^{} log(p(X_i)) - \sum_{i \in C_2}^{} log(1 - p(x_i))$
 
-Goal: Compute $(\beta_0, \beta_1)$ that minimize the log-likelihood. 
+**Goal:** Compute $(\beta_0, \beta_1)$ that minimize the log-likelihood. This can be achieved by using the numerical optimization method *gradient descent*. To give a 
+little more mathematical context, a gradient is a vector of partial derivatives which points into the direction of the steepest ascent. On the other hand, the negative
+gradient point into the direction of the steepest descent. How convenient, we are trying to find the minimum of a cost function!  
+
+**How to apply gradient descent?**
+1. Start with initial guess of parameters $\bm{\beta}$
+2. Uptdate according to: $\bm{\beta}_{t+1} = \bm{\beta}_t - \gamma (\nabla f (\bm{\beta}_t))$
+
+Where $\gamma$ is the step size and $f$ is the loss/cost function (i.e., MSE or negative log-likelihood) and: 
+
+$\nabla f (\bm{\beta}_t) = \sum_{i}^{N} (p(x_i) - y_i)\bm{x_i}$
+
+$p(x_i) = \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$
 """
 )
 
+st.subheader("Stochastic gradient descent (SGD)")
 
 # Functions
 # Creating function for getting plots

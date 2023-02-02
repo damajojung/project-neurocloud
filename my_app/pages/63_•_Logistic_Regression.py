@@ -300,6 +300,16 @@ side, if its smaller, then it's classified as 'Not Iris virginica'.
 
 st.subheader("Multiclass Logistic Regression")
 
+st.markdown(
+    r"""
+One can also use more then one feature for the classification task. The result is a **multiple logistic regression** with the following probability:
+
+$p(C_1, X) \approx \frac{e^{\beta_0 + \sum_i^{} \beta_iX_i}}{1 + e^{\beta_0 +  \sum_i^{} \beta_iX_i}}$
+
+In the following example, we use the features petal width and length. With these two feature, the classifier computes the probability that a new flower is *Iris virginica". 
+The black dashed line it the decision boundary of the model with a probability of 50%. Each of the other parallel lines represent different probabilities computed by the model.  
+"""
+)
 
 ##### Two Features - Softmax Regression
 
@@ -340,3 +350,17 @@ plt.xlabel("Petal length", fontsize=14)
 plt.ylabel("Petal width", fontsize=14)
 plt.axis([2.9, 7, 0.8, 2.7])
 st.pyplot(fig)
+
+
+st.subheader("Softmax Regression")
+
+st.markdown(
+    r"""
+In the previous examples, we whated to know wheter a certain sample belongs to a certain class or not. But what if we want to know whether is belongs to a certain class
+or another one? Or even more then that. Well, then we have to use **Softmax Regression** with the following softmax function. 
+
+$p(C_k, X) \approx \frac{e^{\beta_kX}}{1 + \sum_i^{} e^{\beta_jX}}$
+
+
+"""
+)

@@ -219,6 +219,24 @@ $p(x_i) = \frac{e^{\beta_0 + \beta_1X}}{1 + e^{\beta_0 + \beta_1X}}$
 
 st.subheader("Stochastic gradient descent (SGD)")
 
+st.markdown(
+    r"""
+The optimization process described in the previous sections has one flaw, namely that all the data is required to compute the gradient (N) which can turn out to be
+very time consuming. Therefore, a solution to this obstacle is to randomly choose a subset of the data to estimate the gradient which is called a **mini-batch**. 
+This is being done in stocahtic gradient descent where a randomely subset of the training data (mini-batch) is used to estimate the gradient. The solution still 
+converges and the sampled gradient is an unbiased estimate of the true gradient. Phew, that was a lot of theory! Let's implement it! 
+"""
+)
+
+st.subheader("Iris Virginia Classifier")
+
+st.markdown(
+    r"""
+
+"""
+)
+
+
 # Functions
 # Creating function for getting plots
 def get_figure(x, y):

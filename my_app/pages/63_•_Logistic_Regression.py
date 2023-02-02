@@ -232,16 +232,16 @@ st.subheader("Iris Virginia Classifier")
 
 st.markdown(
     r"""
-
+In this little experiment, I want to illustrate how one can use logistic regression to build a classifier that detects the *Iris virginia* type based only on the petal width 
+feature. The reange of interest of the the feature petal width lies within 0 cm and 3 cm. The estimated probabilities of the model look as follows:
 """
 )
-
 
 # Functions
 # Creating function for getting plots
 def get_figure(x, y):
 
-    fig, ax = plt.subplots(1, figsize=(10, 6))
+    fig, ax = plt.subplots(1, figsize=(10, 4))
     ax.scatter(x, y, s=7)
 
     ax.set_xlabel("Petal length")
@@ -286,6 +286,19 @@ plt.ylabel("Probability", fontsize=14)
 plt.legend(loc="center left", fontsize=14)
 plt.axis([0, 3, -0.02, 1.02])
 st.pyplot(fig)
+
+st.markdown(
+    r"""
+We can see that the petal width of *Iris virginica* flowers range from 1.4 cm to 2.5 cm and are represented by the green triangles in this plot. On the other hand, other iris 
+flowers (represented by the blue squares) tend to have smaller petal width that range between 0.1 cm and 1.8 cm. Our classifier is pretty confident that a flower with a petal width
+above 2 cm is of type *Iris virginica* since it outputs a high probability for that class. Under 1 cm it is pretty confident that the flower is **not** of type *Iris virginica*
+since the probability for 'Not Iris virginica' has a high probability. Please note that that there is a bit of overlap in the middle which results in uncertainty.  The 
+decision boundary is at around 1.6 cm where the probability is 50%. If the petal width is above 1.6 cm, the classifier classifies a sample as *Iris virginica*. On the other
+side, if its smaller, then it's classified as 'Not Iris virginica'. 
+"""
+)
+
+st.subheader("Multiclass Logistic Regression")
 
 
 ##### Two Features - Softmax Regression

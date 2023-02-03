@@ -14,8 +14,12 @@ st.set_page_config(layout="wide")
 st.title("k-Nearest Neighbours")
 
 st.markdown(
-    """
-k-Nearest Neighbours.
+    r"""
+This is a simple classification method that takes a training data set which contains a sample vector $x_i$ with a class index $k_i$ for each
+sample $i = 1,...,n$. Each new  sample $x_s$ with unknown class index is assigned to the same class as the k nearest neighbours. The nearest neighbour
+$x_{j_{s}}$ of $x_s$ can be written as follows:
+
+$j_s = arg \, min \, d(x_s, x_i)$
 """
 )
 

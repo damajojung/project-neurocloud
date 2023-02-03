@@ -361,6 +361,10 @@ or another one? Or even more then that. Well, then we have to use **Softmax Regr
 
 $p(C_k, X) \approx \frac{e^{\beta_kX}}{1 + \sum_i^{} e^{\beta_jX}}$
 
+* $k$ is the number of classes
+* $\beta_X$ is a vector conteining the scores of each class for instance x
+* $p(C_k, X)$ is the estimated probability that an instance x belongs to klass k, given the scores of each class for that instance
+
 For now, we won't go into more detail in this topic here. But we'll might in the future. 😉
 """
 )

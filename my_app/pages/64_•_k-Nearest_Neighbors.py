@@ -15,11 +15,33 @@ st.title("k-Nearest Neighbours")
 
 st.markdown(
     r"""
-This is a simple classification method that takes a training data set which contains a sample vector $x_i$ with a class index $k_i$ for each
-sample $i = 1,...,n$. Each new  sample $x_s$ with unknown class index is assigned to the same class as the k nearest neighbours. The nearest neighbour
-$x_{j_{s}}$ of $x_s$ can be written as follows:
+The foundation of k-nearest neighbours is the *nearest-neighbour* method. This is a simple classification method that takes a training data set which contains a sample vector
+ $x_i$ with a class index $k_i$ for each sample $i = 1,...,n$. Each new  sample $x_s$ with unknown class index is assigned to the same class as the k nearest neighbours. 
+ The nearest neighbour $x_{j_{s}}$ of $x_s$ can be written as follows:
 
-$j_s = arg \, min \, d(x_s, x_i)$
+$j_s = arg \, min_{i=1,...,n} \, d(x_s, x_i)$
+
+Where d is a measurement of distance, most often the Euclidean distance metric.
+
+Logically, an extension to nearest-neighbour method is the k-nearest neighbour (kNN) method where not only the nearest neighbour is taken into consideration but the k-nearest
+neighbours of sample $x_o$. Among the k-nearest-neighbours of $x_o$, let each $m_l$ of class $l , l = 1,...,g$. So $\sum_{l=1}^{g} m_l = k$ applies. The observation 
+$x_o$ is now assigned to the class $\hat{k} (\in 1, ..., g)$ for which holds:
+
+$m_{\hat{k}} = max_{l=1,...,g} \, m_l$
+
+The bigger $k$...
+* the clearer one can see areas of the same class
+* the smaller is the variability within the estimate of the border of the classes
+* the bigger is the systematic error (bias of classification)
+"""
+)
+
+st.header("Misclassification")
+
+st.markdown(
+    r"""
+Bias always leads to misclassification. Misclassification measures the amount of misclassification and is calculated by taking the amount of misclassified samples divided by the
+ total classified samples which can be represented by a confusion matrix. 
 """
 )
 

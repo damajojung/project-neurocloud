@@ -42,6 +42,31 @@ st.markdown(
     r"""
 Bias always leads to misclassification. Misclassification measures the amount of misclassification and is calculated by taking the amount of misclassified samples divided by the
  total classified samples which can be represented by a confusion matrix. 
+
+ |               | Actual Positive | Actual Negative |
+|:-------------:|:--------------:|:--------------:|
+| Predicted Positive  | TP (True Positive) | FP (False Positive) |
+| Predicted Negative  | FN (False Negative) | TN (True Negative) |
+
+Here, TP refers to the number of true positive predictions, FP refers to false positive predictions, FN refers to false negative predictions, and TN refers to
+ true negative predictions. So for example, if we take $k=1$, we could get a matrix like the following one:
+
+ |               | Actual Positive | Actual Negative |
+|:-------------:|:--------------:|:--------------:|
+| Predicted Positive  | 100            | 0              |
+| Predicted Negative  | 0              | 100            |
+
+where we have an error of 0. However, if we increase k to $k=10$, then it results in the following confusion matrix:
+
+|               | Actual Positive | Actual Negative |
+|:-------------:|:--------------:|:--------------:|
+| Predicted Positive  | 90             | 10             |
+| Predicted Negative  | 7              | 93             |
+
+Here, 90 out of 100 positive instances have been correctly predicted as positive, 10 have been predicted as negative (false negatives). Out of 100 negative instances, 
+93 have been correctly predicted as negative and 7 have been predicted as positive (false positives). The total error rate is calculated as (10 + 7)/(100 + 100) = **0.067**.
+
+
 """
 )
 

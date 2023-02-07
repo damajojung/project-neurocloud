@@ -184,3 +184,41 @@ plt.xlim(xx.min(), xx.max())
 plt.ylim(yy.min(), yy.max())
 plt.title(f"3-Class classification (k = {n_neighbours})")
 st.pyplot(fig)
+
+### Getting the best k
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+
+SEED = 42
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.25, random_state=SEED
+)
+
+error = []
+
+# Calculating MAE error for K values between 1 and 39
+for i in range(1, 40):
+    knn = KNeighborsClassifier(n_neighbors=i)
+    knn.fit(X_train, y_train)
+    pred_i = knn.predict(X_test)
+    mae = mean_absolute_error(y_test, pred_i)
+    error.append(mae)
+
+import matplotlib.pyplot as plt
+
+fig1 = plt.figure(figsize=(12, 6))
+plt.plot(
+    range(1, 40),
+    error,
+    color="black",
+    linestyle="dashed",
+    marker="o",
+    markerfacecolor="black",
+    markersize=10,
+)
+
+plt.title("K Value MAE")
+plt.xlabel("K Value")
+plt.ylabel("Mean Absolute Error")
+
+st.pyplot(fig1)

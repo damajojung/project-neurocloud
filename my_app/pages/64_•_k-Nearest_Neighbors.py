@@ -66,7 +66,32 @@ where we have an error of 0. However, if we increase k to $k=10$, then it result
 Here, 90 out of 100 positive instances have been correctly predicted as positive, 10 have been predicted as negative (false negatives). Out of 100 negative instances, 
 93 have been correctly predicted as negative and 7 have been predicted as positive (false positives). The total error rate is calculated as (10 + 7)/(100 + 100) = **0.067**.
 
+A smaller k leads to fewer misclasification within the training set. $k=1$ leads to no misclasification. However, this is heavily overfitting the training data set. Therefore,
+one should always evaluate the performance with a test data set. This leads to the assumption that choosing a too small or too big $k$ is unfavorable and one has to find
+the right one somewhere in between. 
+"""
+)
 
+st.subheader("Practical Information")
+
+st.markdown(
+    r"""
+* If you have two classes, always choose an uneven $k$ in order to avoid ambiguous solutions
+* With more than two classes: it is not always possible to obtain a clear clisification. If it ends in a draw, the claisification is randomly chosen
+* It is advisable to use a seed in order to obtain reproducable results
+* The **advantage** of this method lies in its simplicity
+* The **disadvantages** of the method are that one needs alwas the whole training set. Moreover, the higher the dimensionality of the samples the more samples you need in order to 
+    obtain clear results
+* The distance measurement is the Euclidean metric and important: This method only works with metric data 
+"""
+)
+
+st.header("k-Nearest-Flowers")
+
+st.markdown(
+    r"""
+Since we have worked with the Iris dateset in the previous section, let me illustrate the impact of different $k$s, namely 1,5 and 15 on the Iris data set with features
+sepal width and length. 
 """
 )
 

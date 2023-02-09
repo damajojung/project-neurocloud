@@ -103,8 +103,8 @@ def get_figure(x, y, color, light, bold):
     plt.pcolormesh(xx, yy, Z, cmap=light)
     ax.scatter(x, y, s=30, c=color, cmap=bold, edgecolor="black")
 
-    ax.set_xlabel("Sepal length")
-    ax.set_ylabel("Sepal width")
+    ax.set_xlabel("Sepal length", fontsize=14)
+    ax.set_ylabel("Sepal width", fontsize=14)
     return fig, ax
 
 
@@ -185,40 +185,59 @@ plt.ylim(yy.min(), yy.max())
 plt.title(f"3-Class classification (k = {n_neighbours})")
 st.pyplot(fig)
 
-### Getting the best k
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+st.subheader("Performance Evaluation")
 
-SEED = 42
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.25, random_state=SEED
+st.markdown(
+    r"""
+It is clearly visible that by choosing a $k=1$, there are still quite a few islands and the borders are wiggly. These are flattened out with $k=5$ and barely occur anymore with
+$k=15$. This begs the question: What is the optimal value for k?
+
+This is a classic optimization problem which can be solved with the values of the confusion matrix. We need a performance measurement which can be minimized or maximized, 
+depending on the measurement. There are many performance measurements. However, these are some of the most commonly used.  
+
+| Metric | Formula |
+|--------|---------|
+| Sensitivity (True Positive Rate) | (True Positives) / (True Positives + False Negatives) |
+| Specificity (True Negative Rate) | (True Negatives) / (True Negatives + False Positives) |
+| Accuracy | (True Positives + True Negatives) / (Total number of instances) |
+| Error Rate (Misclassification Rate) | (False Positives + False Negatives) / (Total number of instances) |
+
+We will be working with the error rate which can also be written as $1 \, - \, accuracy$. There are three ways to use the error rate in order to find an optimal k:
+
+* 1.) Use the confusion matrix to calculate the **in-sample error rate**. This method tends to underestimate the error rate. Therefore, it is not advisable to use this one. 
+* 2.) Calculate the **out-of-sample error rate** by using a confusion matrix created by a test data set. This procedure provides an unbiased estimate. However, one needs
+    quite a lot of samples in order to achieve this. 
+* 3.) The state of the art is to use **cross validation** where the whole dataset is split randomly into a train and test data set and with the test data sets the error rate 
+    is calculated. A special case is the **jackknife** or **leave-one-out** method where the sample only contains one object. The validation is completed once every object has
+    been left out. The only drawback of this method is that it is rather computationally intensive and the variance is rather large in smaller data sets. Therefore, it is
+    advisable to leave several objects out. 
+"""
 )
 
-error = []
+### Getting the best k
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import LeaveOneOut
 
-# Calculating MAE error for K values between 1 and 39
+error_rate = []
+# Will take some time
 for i in range(1, 40):
     knn = KNeighborsClassifier(n_neighbors=i)
-    knn.fit(X_train, y_train)
-    pred_i = knn.predict(X_test)
-    mae = mean_absolute_error(y_test, pred_i)
-    error.append(mae)
+    cv = LeaveOneOut()
+    score = cross_val_score(knn, X, y, cv=cv, scoring="neg_mean_absolute_error")
+    error_rate.append(np.mean(np.absolute(score)))
 
-import matplotlib.pyplot as plt
-
-fig1 = plt.figure(figsize=(12, 6))
+fig1 = plt.figure(figsize=(10, 6))
 plt.plot(
     range(1, 40),
-    error,
+    error_rate,
     color="black",
     linestyle="dashed",
     marker="o",
-    markerfacecolor="black",
-    markersize=10,
+    markerfacecolor="white",
+    markersize=8,
 )
 
-plt.title("K Value MAE")
-plt.xlabel("K Value")
-plt.ylabel("Mean Absolute Error")
+plt.ylabel("Leave-one-out cross validation score", fontsize=14)
+plt.xlabel("k", fontsize=14)
 
 st.pyplot(fig1)

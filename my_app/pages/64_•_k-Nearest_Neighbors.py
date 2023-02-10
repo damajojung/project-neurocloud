@@ -273,3 +273,5 @@ plt.ylim(yy.min(), yy.max())
 plt.title(f"3-Class classification (k = {n_neighbours})")
 st.pyplot(fig)
 
+# I could still add Sensitivity, Specificity, Matthews correlation coefficient, Cramers V and the Kappa statistic. Maybe in the future.
+

@@ -214,6 +214,17 @@ We will be working with the error rate which can also be written as $1 \, - \, a
 """
 )
 
+st.subheader("LEave-one-out cross validation")
+
+st.markdown(
+    r"""
+Let me illustrate the leave-one-out cross validation with our data set where for each iteration the negative mean absolute error is calculated and plotted for the 
+different $k$ which can be seen in the following figure. On the x-axis are the k values ranging from 0 to 40 and on the y-axis are the negative means absolute errors. 
+The goal is to take a k with a performance score as low as possible. Ideally, k should also be as small as possible. this is the case for $k = 30$. The result of of $k = 30$
+can be found on the final figure.
+"""
+)
+
 ### Getting the best k
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import LeaveOneOut
@@ -241,3 +252,24 @@ plt.ylabel("Leave-one-out cross validation score", fontsize=14)
 plt.xlabel("k", fontsize=14)
 
 st.pyplot(fig1)
+
+# And now the final figure
+
+############## 30
+n_neighbours = 30
+
+# we create an instance of Neighbours Classifier and fit the data.
+clf = KNeighborsClassifier(n_neighbors=n_neighbours)
+clf.fit(X, y)
+
+# predict class using data and kNN classifier
+Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+# Put the result into a color plot
+Z = Z.reshape(xx.shape)
+fig, ax = get_figure(X[:, 0], X[:, 1], color=y, light=cmap_light, bold=cmap_bold)
+plt.xlim(xx.min(), xx.max())
+plt.ylim(yy.min(), yy.max())
+plt.title(f"3-Class classification (k = {n_neighbours})")
+st.pyplot(fig)
+

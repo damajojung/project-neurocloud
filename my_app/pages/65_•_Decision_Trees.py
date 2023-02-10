@@ -14,8 +14,13 @@ st.set_page_config(layout="wide")
 st.title("Decision Trees")
 
 st.markdown(
-    """
-Decision Trees.
+    r"""
+Decision Trees are powerful Machine learning algorithms that can perform both classification and regression tasks which are non-parametric and non-linear. 
+The main advantages are that they are easy to visualize which is useful for interpretation. This is called a white box model. Moreover, they are fast
+to train and evaluate which is especially beneficial when you are dealing with huge data sets. Additionaly, since they are non-parametric, no
+pre-assumptions about the data is needed. However, they do also have a disadvantage. They have a strong tendency to overfit the training data
+which leads to poor generalisation. Nonetheless, they are a fundamental component of Ranodm Forests which is among the most powerful ML algorithms
+today. Therefore, it worthwhile taking a closer look at decision trees. Let's have a look at the theory. 
 """
 )
 

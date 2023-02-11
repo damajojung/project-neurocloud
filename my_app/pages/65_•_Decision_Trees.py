@@ -156,12 +156,69 @@ There are three techniques for regularise the hyperparameters:
         * It is pretty hard to find a perfect threshold $cp$ apriori and globally so that every treee achieves optimal performance
 * 2.) The minimum number of objects at which a node is to be further divided or which must at least be at hand in an end node has to be specified.
     * For example 10 objects or 5% of all the objects.
-* 3.) Pruning of the trees: Deep trees have two main problems: They overfit and are complex. The complexity of trees is measurt by the amount of
-    end notes (leafs). Therefore, one can stop the growth of the tree after it has reached a certain depth. However, if we stopp the tree too early,
-    we might miss something because we do not know what would have happened if we let the tree grow deeper which is called the horizon effect. 
+* 3.) Pruning of the trees: Deep trees have two main problems: They overfit and are complex. The complexity of trees is measured by the amount of
+    end notes (leafs). Therefore, one can stop the growth of the tree after it has reached a certain depth. However, if we stop the tree too early,
+    we might miss something because we do not know what would have happened if we had let the tree grow deeper which is called the horizon effect. To avoid this problem,
+    we let the tree grow without any restrictions and then the unnecessary branches are cut back which is called **Pruning**. 
+
+However, there are several ways how one can prune trees which are discussed in the following section:
 """
 )
 
+st.subheader("Pruning")
+st.subheader("Cost-complexity pruning")
+
+st.markdown(
+    r"""
+The established method to prune a classification tree is the so-called "cost-complexity pruning". 
+The cost-complexity measure R ⟨β⟩ weighs the accuracy against the complexity of a tree where the complexity of a tree looks as follows:
+
+$Cost-complexity \, R ⟨β⟩ = error \, rate + β - number \, of  \, terminal  \,nodes$
+
+where β (= "penalty" per additional end node) is called the complexity parameter.
+
+
+The cost complexity has the following properties:
+- When β approaches zero, the optimal trees with respect to the cost complexity become larger.
+- If β = 0, then the cost complexity  takes its minimum at the largest possible tree.
+- On the other hand, if β grows and is large (about infinite), then a tree with only one end node (the tree root) has the lowest cost complexity.
+- The optimal tree (i.e. the tree that is not too complex but still has a low error rate) will lie between the above extremes.
+"""
+)
+
+st.subheader("Bottom-up pruning")
+
+st.markdown(
+    r"""
+The pruning starts from the end nodes ("bottom up").
+- Prune from the end nodes as long as the in-sample error rate remains the same.
+- Then search for the so called weakest connection,
+    i.e. the node at which cutting the underlying tree increases the in-sample error rate the least, so that the smallest increase in the penalty parameter $β$
+      is necessary for the cost complexity to be the same with and without the underlying tree.
+- Cut off the subtree of the weakest connection.
+- Repeat the search for the weakest connection in the truncated tree iteratively until only the tree root is left.
+    The complexity parameter $β$ increases and the number of nodes in the tree decreases.
+- Then determine the tree with the optimal prediction accuracy from this series of subtrees with the help of cross-validation or test data. 
+    A series of increasing β-values $(β_k , k = 1, 2, . . .)$ arises, which result in ever simpler trees.
+
+
+The out-of-sample error rate of these thumbs contained in each other is now to be determined with a 10-fold cross-validation.
+For this purpose
+- First, maximum trees are generated on the basis of 9/10 of the learning sample in each case,
+- Then these trees are pruned with the same complexity parameters βk as above in the total learning sample, and
+- The cross-validated error rate is determined for all these trees. Note that the number of terminal nodes in such trees need not be equal, but only the $β_k$ .
+    Caution: The results change with each new run because of the random sampling in the cross-validation.
+    Therefore, a random seed is set for the random number generator at the beginning of the cross-validation in order to obtain reproducable results.
+"""
+)
+
+st.subheader("Pruned tree")
+
+st.markdown(
+    r"""
+A simple trick as constraining the tree to grow to a maximum depth of 3 already results in the following tree:
+"""
+)
 
 tree_clf = DecisionTreeClassifier(max_depth=3)
 tree_clf.fit(X, y)
@@ -176,6 +233,26 @@ _ = tree.plot_tree(
     filled=True,
 )
 st.pyplot(fig)
+
+st.markdown(
+    r"""
+The `DecisionTreeClassifier` class has a few other parameters that similarly restrict the shape of the Decision Tree:
+
+* `max_depth`: The maximum depth of the tree.
+* `min_samples_split`: The minimum number of samples required to split an internal node.
+* `min_samples_leaf`: The minimum number of samples required to be at a leaf node.
+* `min_weight_fraction_leaf`: The minimum weighted fraction of the sum total of weights (of all
+    the input samples) required to be at a leaf node. Samples have
+    equal weight when sample_weight is not provided.
+* `max_leaf_nodes`: Grow a tree with ``max_leaf_nodes`` in best-first fashion.
+* `max_features`: The number of features to consider when looking for the best split.
+"""
+)
+
+
+# if st.button("Time for Party!"):
+#     st.balloons()
+
 
 # Useful information:
 # Normally, the data must be numerical (not with DT). However, one can onehotencode the data as follows:

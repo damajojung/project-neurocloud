@@ -24,6 +24,50 @@ today. Therefore, it worthwhile taking a closer look at decision trees. Let's ha
 """
 )
 
+st.header("Theory")
+
+st.markdown(
+    r"""
+
+The construction of a tree includes following three elements:
+
+* 1.) Selection of the division: How do we decide which feature is taken for a division at a given node and how do we find a threshold?
+* 2.) How do we decide when a node is a final one or we have to continue with dividing our data? (Still a branch or already a leaf)
+* 3.) The leafs must be assigned to a certain class. How do we do that?
+
+There are several things we have to take into consideration. First, we can only as binary questions that can be answered with yes or no. Second, questions always asked regarding one 
+feature. Third, for interval-scaled and ordinal features we have to ask: Is $x_i^j  \leq c_j$? For nominal feature one has to find an apppropriate division into two groups
+which is quite computationaly heave since $2^{L-1}-1$ possible divisions must be analised. ($L$ are the factor levels)
+
+The optimal question is one that leads to partitions that are as pure as possible (contain only objects of the same class). Therefore, we have to measure the impurity $I(N)$ 
+in node $N$ which can be done with the Gini impurity with the following formula:
+
+$I_G(N) = \sum_{k=1}^g (error \, rate \ class \, j) * p(\Omega_j | N) = ... = 1 - \sum_{k=1}^g p^2 (\Omega_k | N)$
+
+i.e. it corresponds to the expected error rate at node N if the class label $\Omega_l$ is randomly selected from the classes present at node $N$.
+In the case of only two classes, the Gini index is proportional to the variance of a binomial experiment with success parameter $p ⟨\Omega_2 | N⟩$.
+The variance of a Bernoulli experiment with success parameter $p$ is $p (1 − p)$ or $p * q$ if $q = 1 − p$. Since $p^2 + q2 = (p + q)^2 − 2pq$, we have
+$2pq = 1 − p^2 − q^2$.
+
+Now choose the question such that the level of contamination is reduced as much as possible, where the level is given by the following expression:
+$∆I⟨N⟩ = I⟨N⟩ − a_L * I⟨N_L⟩ − (1 − a_L) * I⟨N_R⟩$
+NL and NR designate the left and right subsequent nodes, respectively, and $a_L$ the proportion of those objects at node $N$ that go into the left subsequent node.
+The best question at node $N$ is now the one that maximizes $∆I⟨N⟩$.
+i.e.
+* The best distribution is sought in each feature
+* and then one looks for the best split in each feature
+
+Remarks:
+* The solution is not necessarily unique
+    (If e.g. for all $c_j ∈ (c_j^L, c_j^R )$ the question “$x^{(j)} \leq c_j$” leads to the same improvement, one chooses $c_j = (c_j^L + c_j^R )/2)$
+* The optimization is always performed locally, i.e. at each individual node. Therefore, one does not necessarily find the global optimum - is a so-called "greedy search" procedure
+
+With regards to the 2.) and 3.) elements of constructing a tree:
+
+* For the time being, we let the tree grow as long as we find a feature so that $∆I ⟨N⟩ > 0$.
+*  Class assignment in an end node: Because not every end node is necessarily pure, it is assigned to the class that has the majority in the end node based on the learning sample.
+"""
+)
 from sklearn.datasets import load_wine
 
 data = load_wine(as_frame=True)

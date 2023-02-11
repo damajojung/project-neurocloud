@@ -66,14 +66,102 @@ With regards to the 2.) and 3.) elements of constructing a tree:
 
 * For the time being, we let the tree grow as long as we find a feature so that $∆I ⟨N⟩ > 0$.
 *  Class assignment in an end node: Because not every end node is necessarily pure, it is assigned to the class that has the majority in the end node based on the learning sample.
+
+Let's have a look at some data and an example.
 """
 )
+
+st.header("Wine Tree")
+
+# Get data
 from sklearn.datasets import load_wine
 
-data = load_wine(as_frame=True)
+# Getting data
+@st.cache
+def load_data():
+    data = load_wine(as_frame=True)
+    return data
+
+
+data = load_data()
+
+# End get data
+
+st.markdown(
+    r"""
+We use the wine dataset from sklearn's library which contains the following attributes:
+
+* Alcohol
+* Malic acid
+* Ash
+* Alcalinity of ash
+* Magnesium
+* Total phenols
+* Flavanoids
+* Nonflavanoid phenols
+* Proanthocyanins
+* Color intensity
+* Hue
+* OD280/OD315 of diluted wines
+* Proline
+
+which looks as follows:
+"""
+)
+
+st.dataframe(data.frame)
+
+st.markdown(
+    r"""
+There are three classes of wine which are stored in the columns *target* and labelled as class_0, class_1 and class_2. The goal is to classify them with a 
+decision tree just like we have discussed in the theory section which looks as follows:
+"""
+)
 
 X = data.frame.loc[:, ["alcohol", "color_intensity"]]
 y = data.frame.iloc[:, -1:]
+
+tree_clf = DecisionTreeClassifier()
+tree_clf.fit(X, y)
+
+from sklearn import tree
+
+fig = plt.figure(figsize=(15, 10))
+_ = tree.plot_tree(
+    tree_clf,
+    feature_names=["alcohol", "color_intensity"],  # wine.feature_names
+    class_names=["class_0", "class_1", "class_2"],  # wine.target_names
+    filled=True,
+)
+st.pyplot(fig)
+
+st.markdown(
+    r"""
+Holy smokes, that escalated quickly. Remember when I said that decision trees have a strong tendency to overvit? This is what I was talking about. Therefore, 
+we have to do some regularisation of the hyperparameters in order to overcome the overfitting. 
+"""
+)
+
+st.header("Regularisation of Hyperparameters")
+
+st.markdown(
+    r"""
+There are three techniques for regularise the hyperparameters:
+
+* 1.) Restrict growth by allowing the tree to grow only as long as $∆I ⟨N⟩$ at a node $N$ does not fall below a predefined threshold value $cp$.
+    * **Advantages**: 
+        * The tree is trained on all the training data
+        * Different end nodes can be reached by a different number of intermediate nodes.
+    * **Disadvantage**:
+        * It is pretty hard to find a perfect threshold $cp$ apriori and globally so that every treee achieves optimal performance
+* 2.) The minimum number of objects at which a node is to be further divided or which must at least be at hand in an end node has to be specified.
+    * For example 10 objects or 5% of all the objects.
+* 3.) Pruning of the trees: Deep trees have two main problems: They overfit and are complex. The complexity of trees is measurt by the amount of
+    end notes (leafs). Therefore, one can stop the growth of the tree after it has reached a certain depth. However, if we stopp the tree too early,
+    we might miss something because we do not know what would have happened if we let the tree grow deeper which is called the horizon effect. 
+"""
+)
+
 
 tree_clf = DecisionTreeClassifier(max_depth=3)
 tree_clf.fit(X, y)
@@ -90,7 +178,7 @@ _ = tree.plot_tree(
 st.pyplot(fig)
 
 # Useful information:
-# Normally, the data must be numerical. However, one can onehotencode the data as follows:
+# Normally, the data must be numerical (not with DT). However, one can onehotencode the data as follows:
 
 # one_hot_data = pd.get_dummies(dat[['Outlook', 'Temperature', 'Humidity', 'Windy']],drop_first=True)
 # tree_clf.fit(one_hot_data, dat['Play'])

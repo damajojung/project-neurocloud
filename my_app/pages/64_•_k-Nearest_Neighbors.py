@@ -214,7 +214,7 @@ We will be working with the error rate which can also be written as $1 \, - \, a
 """
 )
 
-st.subheader("LEave-one-out cross validation")
+st.subheader("Leave-one-out cross validation")
 
 st.markdown(
     r"""

@@ -249,6 +249,12 @@ The `DecisionTreeClassifier` class has a few other parameters that similarly res
 """
 )
 
+st.header("Instability")
+
+st.header("Regression")
+
+# https://scikit-learn.org/stable/modules/tree.html
+
 
 # if st.button("Time for Party!"):
 #     st.balloons()

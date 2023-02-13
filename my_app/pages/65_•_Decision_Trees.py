@@ -85,6 +85,38 @@ def load_data():
 
 data = load_data()
 
+
+from matplotlib.colors import ListedColormap
+
+
+def plot_decision_boundary(
+    clf, X, y, axes=[0, 7.5, 0, 3], iris=True, legend=False, plot_training=True
+):
+    x1s = np.linspace(axes[0], axes[1], 100)
+    x2s = np.linspace(axes[2], axes[3], 100)
+    x1, x2 = np.meshgrid(x1s, x2s)
+    X_new = np.c_[x1.ravel(), x2.ravel()]
+    y_pred = clf.predict(X_new).reshape(x1.shape)
+    custom_cmap = ListedColormap(["#fafab0", "#9898ff", "#a0faa0"])
+    plt.contourf(x1, x2, y_pred, alpha=0.3, cmap=custom_cmap)
+    if not iris:
+        custom_cmap2 = ListedColormap(["#7d7d58", "#4c4c7f", "#507d50"])
+        plt.contour(x1, x2, y_pred, cmap=custom_cmap2, alpha=0.8)
+    if plot_training:
+        plt.plot(X[:, 0][y == 0], X[:, 1][y == 0], "yo", label="Iris setosa")
+        plt.plot(X[:, 0][y == 1], X[:, 1][y == 1], "bs", label="Iris versicolor")
+        plt.plot(X[:, 0][y == 2], X[:, 1][y == 2], "g^", label="Iris virginica")
+        plt.axis(axes)
+    if iris:
+        plt.xlabel("Petal length", fontsize=14)
+        plt.ylabel("Petal width", fontsize=14)
+    else:
+        plt.xlabel(r"$x_1$", fontsize=18)
+        plt.ylabel(r"$x_2$", fontsize=18, rotation=0)
+    if legend:
+        plt.legend(loc="lower right", fontsize=14)
+
+
 # End get data
 
 st.markdown(
@@ -234,6 +266,33 @@ _ = tree.plot_tree(
 )
 st.pyplot(fig)
 
+
+st.markdown(
+    r"""
+Moreover, here is another exaple that illustrates what impact regularisation can have on the end result:
+"""
+)
+
+from sklearn.datasets import make_moons
+
+Xm, ym = make_moons(n_samples=100, noise=0.25, random_state=53)
+
+deep_tree_clf1 = DecisionTreeClassifier(random_state=42)
+deep_tree_clf2 = DecisionTreeClassifier(min_samples_leaf=4, random_state=42)
+deep_tree_clf1.fit(Xm, ym)
+deep_tree_clf2.fit(Xm, ym)
+
+fig, axes = plt.subplots(ncols=2, figsize=(10, 4), sharey=True)
+plt.sca(axes[0])
+plot_decision_boundary(deep_tree_clf1, Xm, ym, axes=[-1.5, 2.4, -1, 1.5], iris=False)
+plt.title("No restrictions", fontsize=16)
+plt.sca(axes[1])
+plot_decision_boundary(deep_tree_clf2, Xm, ym, axes=[-1.5, 2.4, -1, 1.5], iris=False)
+plt.title("min_samples_leaf = {}".format(deep_tree_clf2.min_samples_leaf), fontsize=14)
+plt.ylabel("")
+
+st.pyplot(fig)
+
 st.markdown(
     r"""
 The `DecisionTreeClassifier` class has a few other parameters that similarly restrict the shape of the Decision Tree:
@@ -250,6 +309,39 @@ The `DecisionTreeClassifier` class has a few other parameters that similarly res
 )
 
 st.header("Instability")
+
+st.markdown(
+    r"""
+I guess by now it is clear that Decision Trees are powerful and yet easy to understand. However, one has to question their results and double check whether it makes sense. 
+Moreover, since the only draw orthogonal decision boundaries (always perpendicular to an axis), which makes them highly sensitiv to the data. For example, the data in the
+following figure is fairly simple which can easily be lienearly seperated such as on the left hand side. However, the same data has been rotated by an angle of 45° which leads
+to an unnecessarily convoluted solution. Sure, both trees fit the training data well, it is highly likely that the model on the right will not generalize well. To put it 
+more generally, one of the main issues with Decision Trees is that they are bery sensitive to small variations in the training data. 
+"""
+)
+
+np.random.seed(6)
+Xs = np.random.rand(100, 2) - 0.5
+ys = (Xs[:, 0] > 0).astype(np.float32) * 2
+
+angle = np.pi / 4
+rotation_matrix = np.array(
+    [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]]
+)
+Xsr = Xs.dot(rotation_matrix)
+
+tree_clf_s = DecisionTreeClassifier(random_state=42)
+tree_clf_s.fit(Xs, ys)
+tree_clf_sr = DecisionTreeClassifier(random_state=42)
+tree_clf_sr.fit(Xsr, ys)
+
+fig, axes = plt.subplots(ncols=2, figsize=(10, 4), sharey=True)
+plt.sca(axes[0])
+plot_decision_boundary(tree_clf_s, Xs, ys, axes=[-0.7, 0.7, -0.7, 0.7], iris=False)
+plt.sca(axes[1])
+plot_decision_boundary(tree_clf_sr, Xsr, ys, axes=[-0.7, 0.7, -0.7, 0.7], iris=False)
+plt.ylabel("")
+st.pyplot(fig)
 
 st.header("Regression")
 

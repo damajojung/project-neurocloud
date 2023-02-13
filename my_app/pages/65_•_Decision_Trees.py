@@ -8,6 +8,7 @@ import sklearn
 from sklearn import datasets
 import os
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeRegressor
 
 st.set_page_config(layout="wide")
 
@@ -344,6 +345,41 @@ plt.ylabel("")
 st.pyplot(fig)
 
 st.header("Regression")
+
+# Create a random dataset
+rng = np.random.RandomState(1)
+X = np.sort(5 * rng.rand(80, 1), axis=0)
+y = np.sin(X).ravel()
+y[::5] += 3 * (0.5 - rng.rand(16))
+
+# Fit regression model
+regr_1 = DecisionTreeRegressor(max_depth=2)
+regr_2 = DecisionTreeRegressor(max_depth=5)
+regr_3 = DecisionTreeRegressor()
+regr_1.fit(X, y)
+regr_2.fit(X, y)
+regr_3.fit(X, y)
+
+# Predict
+X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
+y_1 = regr_1.predict(X_test)
+y_2 = regr_2.predict(X_test)
+y_3 = regr_3.predict(X_test)
+
+# Plot the results
+fig = plt.figure(figsize=(15, 10))
+plt.scatter(X, y, s=80, edgecolor="black", c="darkorange", label="data")
+plt.plot(X_test, y_3, color="lightgrey", label="No regularisation", linewidth=2)
+plt.plot(X_test, y_1, color="cornflowerblue", label="max_depth=2", linewidth=3)
+plt.plot(X_test, y_2, color="yellowgreen", label="max_depth=5", linewidth=3)
+plt.xlabel("data", fontsize=14)
+plt.ylabel("target", fontsize=14)
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+plt.title("Decision Tree Regression", fontsize=16)
+plt.legend()
+st.pyplot(fig)
+
 
 # https://scikit-learn.org/stable/modules/tree.html
 

@@ -311,41 +311,6 @@ The `DecisionTreeClassifier` class has a few other parameters that similarly res
 """
 )
 
-st.header("Instability")
-
-st.markdown(
-    r"""
-I guess by now it is clear that Decision Trees are powerful and yet easy to understand. However, one has to question their results and double check whether it makes sense. 
-Moreover, since the only draw orthogonal decision boundaries (always perpendicular to an axis), which makes them highly sensitiv to the data. For example, the data in the
-following figure is fairly simple which can easily be lienearly seperated such as on the left hand side. However, the same data has been rotated by an angle of 45° which leads
-to an unnecessarily convoluted solution. Sure, both trees fit the training data well, it is highly likely that the model on the right will not generalize well. To put it 
-more generally, one of the main issues with Decision Trees is that they are bery sensitive to small variations in the training data. 
-"""
-)
-
-np.random.seed(6)
-Xs = np.random.rand(100, 2) - 0.5
-ys = (Xs[:, 0] > 0).astype(np.float32) * 2
-
-angle = np.pi / 4
-rotation_matrix = np.array(
-    [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]]
-)
-Xsr = Xs.dot(rotation_matrix)
-
-tree_clf_s = DecisionTreeClassifier(random_state=42)
-tree_clf_s.fit(Xs, ys)
-tree_clf_sr = DecisionTreeClassifier(random_state=42)
-tree_clf_sr.fit(Xsr, ys)
-
-fig, axes = plt.subplots(ncols=2, figsize=(10, 4), sharey=True)
-plt.sca(axes[0])
-plot_decision_boundary(tree_clf_s, Xs, ys, axes=[-0.7, 0.7, -0.7, 0.7], iris=False)
-plt.sca(axes[1])
-plot_decision_boundary(tree_clf_sr, Xsr, ys, axes=[-0.7, 0.7, -0.7, 0.7], iris=False)
-plt.ylabel("")
-st.pyplot(fig)
-
 st.header("Regression")
 
 st.markdown(
@@ -411,6 +376,42 @@ plt.xticks(fontsize=14)
 plt.yticks(fontsize=14)
 plt.title("Decision Tree Regression", fontsize=16)
 plt.legend()
+st.pyplot(fig)
+
+st.header("Instability")
+
+st.markdown(
+    r"""
+I guess by now it is clear that Decision Trees are powerful and yet easy to understand. However, one has to question their results and double check whether they make sense. 
+Moreover, since the only draw orthogonal decision boundaries (always perpendicular to an axis), which makes them highly sensitiv to the data. For example, the data in the
+following figure is fairly simple which can easily be lienearly seperated such as on the left hand side. However, the same data has been rotated by an angle of 45° which leads
+to an unnecessarily convoluted solution. Sure, both trees fit the training data well, it is highly likely that the model on the right will not generalize well. To put it 
+more generally, one of the main issues with Decision Trees is that they are bery sensitive to small variations in the training data. Random Forests can limit those
+limitations of a signle Decision Tree by averaging predictions over many treees, as it is shown in the following chapter. 
+"""
+)
+
+np.random.seed(6)
+Xs = np.random.rand(100, 2) - 0.5
+ys = (Xs[:, 0] > 0).astype(np.float32) * 2
+
+angle = np.pi / 4
+rotation_matrix = np.array(
+    [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]]
+)
+Xsr = Xs.dot(rotation_matrix)
+
+tree_clf_s = DecisionTreeClassifier(random_state=42)
+tree_clf_s.fit(Xs, ys)
+tree_clf_sr = DecisionTreeClassifier(random_state=42)
+tree_clf_sr.fit(Xsr, ys)
+
+fig, axes = plt.subplots(ncols=2, figsize=(10, 4), sharey=True)
+plt.sca(axes[0])
+plot_decision_boundary(tree_clf_s, Xs, ys, axes=[-0.7, 0.7, -0.7, 0.7], iris=False)
+plt.sca(axes[1])
+plot_decision_boundary(tree_clf_sr, Xsr, ys, axes=[-0.7, 0.7, -0.7, 0.7], iris=False)
+plt.ylabel("")
 st.pyplot(fig)
 
 

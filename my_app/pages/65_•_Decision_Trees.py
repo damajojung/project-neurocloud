@@ -165,6 +165,7 @@ _ = tree.plot_tree(
     feature_names=["alcohol", "color_intensity"],  # wine.feature_names
     class_names=["class_0", "class_1", "class_2"],  # wine.target_names
     filled=True,
+    rounded=True,
 )
 st.pyplot(fig)
 
@@ -264,6 +265,7 @@ _ = tree.plot_tree(
     feature_names=["alcohol", "color_intensity"],  # wine.feature_names
     class_names=["class_0", "class_1", "class_2"],  # wine.target_names
     filled=True,
+    rounded=True,
 )
 st.pyplot(fig)
 
@@ -346,6 +348,14 @@ st.pyplot(fig)
 
 st.header("Regression")
 
+st.markdown(
+    r"""
+Besides classifications tasts decision trees are also capable of performing regression tasks. A decision tree itself looks identical to one of a classification task.
+The main difference is that instead of predicting a class in the leafs it predicts a value which could be value 0.250. 
+
+"""
+)
+
 # Create a random dataset
 rng = np.random.RandomState(1)
 X = np.sort(5 * rng.rand(80, 1), axis=0)
@@ -359,6 +369,18 @@ regr_3 = DecisionTreeRegressor()
 regr_1.fit(X, y)
 regr_2.fit(X, y)
 regr_3.fit(X, y)
+
+### Plotting a regression tree
+
+fig = plt.figure(figsize=(15, 10))
+_ = tree.plot_tree(
+    regr_1,
+    # feature_names=["alcohol", "color_intensity"],  # wine.feature_names
+    # class_names=["class_0", "class_1", "class_2"],  # wine.target_names
+    filled=True,
+    rounded=True,
+)
+st.pyplot(fig)
 
 # Predict
 X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]

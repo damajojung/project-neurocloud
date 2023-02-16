@@ -351,8 +351,9 @@ st.header("Regression")
 st.markdown(
     r"""
 Besides classifications tasts decision trees are also capable of performing regression tasks. A decision tree itself looks identical to one of a classification task.
-The main difference is that instead of predicting a class in the leafs it predicts a value which could be value 0.250. 
-
+The main difference is that instead of predicting a class in the leafs it predicts a value. For instance, lets suppose you want to make a prediction for a new instance
+with $x_1 = 3.4$. You traverse the tree starting at the root and travel to the leaf node that predicts value = -0.452. This prediction is the average target value of the 14
+training instances associated with this leaf node. Moreover, it results in a mean squared error equal to 0.124 over these 14 instances. 
 """
 )
 
@@ -381,6 +382,16 @@ _ = tree.plot_tree(
     rounded=True,
 )
 st.pyplot(fig)
+
+st.markdown(
+    r"""
+The predictions from the tree above can be seen in the following figure from the tree with `max_depth=2`. Notive how the predicted value for each region is always the
+average target value of the instances in that region. The algorithm splits region in a way that makes most training instance as close as possible to that predicted
+value. Insted of minimizing impurity as in a classification task, now the MSE is minimized. And just like in the classification task, Decision Trees for regression
+overfit the data as well as it can be seen in the figure with the grey predcition line. Therefore, a `max_depth=2`and `max_depth=5`in blue and green respective are
+displayed as well. It goes without saying that all the regularisation methods from before work here as well. 
+"""
+)
 
 # Predict
 X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]

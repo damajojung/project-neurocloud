@@ -16,9 +16,94 @@ st.title("Random Forests")
 
 st.markdown(
     """
-Random Forests.
+Random Forest is an ensemble of Decision Trees that are trained via the bagging method, typically with `max_samples`set to the size of the training set. 
+Instead of training one tree perfetctly, we aim to train many trees imprefectly. Each of them trainied on a random subset of features and/or samples. 
+Like with Decision Trees, you can perform classification as well as regression tasks by using `RandomForestClassifier`and `RandomForestRegressor`. 
+Let's dive into the main ideas behind Random Forests.
 """
 )
+
+st.header("Theory")
+
+st.markdown(
+    r"""
+Bagging, which stands for Bootstrap Aggregation, is a machine learning ensemble method that involves combining multiple models to improve the overall 
+ accuracy and stability of predictions. In the context of random forests, bagging is used to create a diverse set of decision trees that can make robust
+ and accurate predictions.
+
+The theory behind bagging in random forests is based on two key principles:
+
+* **Bootstrap Sampling**: The first principle of bagging is to use bootstrap sampling to create multiple datasets from the original data. Bootstrap sampling involves randomly sampling the original dataset with replacement, creating multiple datasets of the same size as the original but with some observations repeated and others left out. This process creates datasets that are slightly different from the original data, allowing for the generation of a diverse  set of decision trees.
+
+* **Random Feature Selection**: The second principle of bagging in random forests is to randomly select a subset of features from the dataset for each tree.
+  This helps to reduce the correlation between the trees and increases the diversity of the forest.
+
+In random forests, multiple decision trees are trained on different bootstrap samples of the original data, each using a randomly selected subset of 
+features. The final prediction is made by averaging the predictions of all the trees in the forest, giving equal weight to each tree. This process helps 
+to reduce overfitting and increases the stability and accuracy of the model. Additionally, because each tree is trained on a slightly different dataset 
+and uses a different subset of features, the model is less sensitive to outliers and noise in the data.
+"""
+)
+
+st.header("AdaBoost")
+
+st.markdown(
+    r"""
+AdaBoost, short for Adaptive Boosting, is a popular ensemble learning method that combines several weak models to form a strong model. In the context of 
+random forests, AdaBoost can be used to improve the performance of the forest by boosting the importance of difficult-to-predict instances.
+
+The theory behind AdaBoost in random forests is based on the following principles:
+
+* Weighted Sampling: The first principle of AdaBoost is to use weighted sampling to adjust the importance of observations in the dataset. The weights are 
+    initially set to 1/N, where N is the number of observations. After the first model is trained, the weights are adjusted to give more importance to 
+    observations that were incorrectly classified and less importance to correctly classified observations.
+
+* Combining Weak Models: The second principle of AdaBoost is to combine several weak models to form a strong model. Each weak model is trained on a 
+    different weighted dataset, and the final model is formed by combining the predictions of all the weak models.
+
+In random forests, AdaBoost can be used to improve the performance of the forest by boosting the importance of difficult-to-predict instances. 
+The AdaBoost algorithm trains a series of decision trees, with each subsequent tree focusing on the instances that were incorrectly classified by the 
+previous tree. The weights are adjusted after each tree, and the final prediction is made by combining the predictions of all the trees.
+
+The benefit of AdaBoost is that it can improve the accuracy of the forest by focusing on difficult-to-predict instances. The weights of the observations 
+ensure that the models focus on the observations that are difficult to classify correctly, improving the overall performance of the forest. Additionally, 
+AdaBoost is less prone to overfitting than other ensemble methods, as it places more emphasis on difficult-to-predict observations, rather than relying 
+too heavily on the most frequently occurring patterns in the data.
+
+"""
+)
+
+st.header("XGBoost")
+
+st.markdown(
+    r"""
+XGBoost, which stands for eXtreme Gradient Boosting, is a powerful ensemble learning method that combines multiple weak models to form a strong model. 
+It is a variant of the gradient boosting method that uses a combination of additive tree models to improve the accuracy and speed of the forest.
+
+The theory behind XGBoost in random forests is based on the following principles:
+
+* Gradient Boosting: The first principle of XGBoost is gradient boosting. Gradient boosting involves the iterative addition of decision trees to the 
+    ensemble, with each subsequent tree focusing on the errors made by the previous tree. The prediction of the final model is the sum of the predictions 
+    of all the trees.
+
+* Regularization: The second principle of XGBoost is regularization. Regularization is used to prevent overfitting by penalizing complex models. 
+    Regularization can be achieved in XGBoost by adding a penalty term to the loss function.
+
+* Feature Importance: The third principle of XGBoost is feature importance. Feature importance is a measure of how much each feature contributes to the 
+    performance of the model. XGBoost can compute feature importance by calculating the number of times each feature is used in the trees.
+
+* Parallel Processing: The fourth principle of XGBoost is parallel processing. XGBoost can parallelize the computation of the decision trees, 
+    enabling it to train large ensembles quickly.
+
+In XGBoost, the gradient boosting algorithm is extended by adding additional regularization terms to the loss function, which helps prevent overfitting. 
+Additionally, XGBoost computes feature importance and can handle missing data, making it a robust and flexible method for solving a wide range of problems.
+
+XGBoost is particularly useful for large-scale machine learning problems, as it can parallelize the computation of the decision trees and handle missing 
+data effectively. Additionally, the feature importance measure allows users to identify the most important features in the dataset, enabling them to focus
+ on the most relevant features for their problem. Overall, XGBoost is a powerful and flexible method for solving a wide range of machine learning problems.
+"""
+)
+
 
 # Get data
 dir = os.getcwd()

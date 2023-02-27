@@ -8,7 +8,35 @@ import sklearn
 from sklearn import datasets
 import os
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import (
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+    accuracy_score,
+    precision_score,
+    recall_score,
+)
+
+# Data Processing
+import pandas as pd
+import numpy as np
+
+# Modelling
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    precision_score,
+    recall_score,
+    ConfusionMatrixDisplay,
+)
+from sklearn.model_selection import RandomizedSearchCV, train_test_split
+from scipy.stats import randint
+
+# Tree Visualisation
+from sklearn.tree import export_graphviz
+from IPython.display import Image
+import graphviz
+from sklearn import tree
 
 st.set_page_config(layout="wide")
 
@@ -124,12 +152,12 @@ y = df["sex"]
 
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42
+    X, y, test_size=0.2, random_state=42
 )
 from sklearn.ensemble import RandomForestClassifier
 
 rf_model = RandomForestClassifier(
-    n_estimators=500, max_features="auto", random_state=42
+    n_estimators=1000, max_features="auto", random_state=42
 )
 rf_model.fit(X_train, y_train)
 
@@ -138,9 +166,22 @@ predictions = rf_model.predict(X_test)
 comparison = pd.DataFrame({"Predictions": predictions, "Actual": np.array(y_test)})
 st.dataframe(comparison)
 
+accuracy = accuracy_score(y_test, predictions)
+st.write(accuracy)
+
+# Export the first three decision trees from the forest
+
+for i in range(3):
+    tree_for = rf_model.estimators_[i]
+    fig = plt.figure(figsize=(10, 7))
+    _ = tree.plot_tree(
+        tree_for, feature_names=X_train.columns, filled=True, rounded=True, max_depth=2
+    )
+    st.pyplot(fig)
+
 cm = confusion_matrix(y_test, predictions, labels=rf_model.classes_)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=rf_model.classes_)
-fig, ax = plt.subplots(figsize=(20, 10))
+fig, ax = plt.subplots(figsize=(5, 5))
 disp.plot(ax=ax)
 
 st.pyplot(fig)
@@ -154,3 +195,42 @@ while i < len(columns):
         f"The importance of feature {columns[i]} is {round(importances[i] * 100,2)} %."
     )
     i += 1
+
+
+####### Cross Validation
+
+param_dist = {"n_estimators": randint(50, 500), "max_depth": randint(1, 20)}
+
+# Create a random forest classifier
+rf = RandomForestClassifier()
+
+# Use random search to find the best hyperparameters
+rand_search = RandomizedSearchCV(rf, param_distributions=param_dist, n_iter=5, cv=5)
+
+# Fit the random search object to the data
+rand_search.fit(X_train, y_train)
+
+# Create a variable for the best model
+best_rf = rand_search.best_estimator_
+
+# Print the best hyperparameters
+st.write(rand_search.best_params_)
+
+y_pred = best_rf.predict(X_test)
+
+# accuracy = accuracy_score(y_test, y_pred)
+# precision = precision_score(y_test, y_pred)
+# recall = recall_score(y_test, y_pred)
+
+# st.write("Accuracy:", accuracy)
+# st.write("Precision:", precision)
+# st.write("Recall:", recall)
+
+# Create a series containing feature importances from the model and feature names from the training data
+feature_importances = pd.Series(
+    best_rf.feature_importances_, index=X_train.columns
+).sort_values(ascending=False)
+
+# Plot a simple bar chart
+# st.pyplot(feature_importances.plot.bar())
+

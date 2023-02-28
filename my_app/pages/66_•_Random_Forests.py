@@ -218,13 +218,13 @@ st.write(rand_search.best_params_)
 
 y_pred = best_rf.predict(X_test)
 
-# accuracy = accuracy_score(y_test, y_pred)
-# precision = precision_score(y_test, y_pred)
-# recall = recall_score(y_test, y_pred)
+accuracy = accuracy_score(y_test, y_pred)
+precision = precision_score(y_test, y_pred, average="binary", pos_label="m")
+recall = recall_score(y_test, y_pred, average="binary", pos_label="m")
 
-# st.write("Accuracy:", accuracy)
-# st.write("Precision:", precision)
-# st.write("Recall:", recall)
+st.write("Accuracy:", accuracy)
+st.write("Precision:", precision)
+st.write("Recall:", recall)
 
 # Create a series containing feature importances from the model and feature names from the training data
 feature_importances = pd.Series(
@@ -232,5 +232,6 @@ feature_importances = pd.Series(
 ).sort_values(ascending=False)
 
 # Plot a simple bar chart
-# st.pyplot(feature_importances.plot.bar())
-
+fig = plt.figure(figsize=(15, 10))
+feature_importances.plot.bar()
+st.pyplot(fig)

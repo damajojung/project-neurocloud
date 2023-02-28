@@ -132,7 +132,6 @@ data effectively. Additionally, the feature importance measure allows users to i
 """
 )
 
-
 # Get data
 dir = os.getcwd()
 data_dir = dir + "/app_data/possum.csv"
@@ -154,6 +153,28 @@ y = df["sex"]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
+
+st.header("Example")
+
+st.markdown(
+    r"""
+Let's do it with real data. Here we have a possum data set which contains the following attributes `'case', 'site', 'Pop', 'sex', 'age', 'hdlngth', 'skullw', 'totlngth',
+       'taill', 'footlgth', 'earconch', 'eye', 'chest', 'belly'` which describe certain characteristics of possums. The actual data can be seen in the 
+       following data frame:
+"""
+)
+
+st.dataframe(df)
+
+st.markdown(
+    r"""
+Let us predict the sex of a possum with a Random Forest. This is done in the following section.
+"""
+)
+
+
+st.header("Random Forest for Classification")
+
 from sklearn.ensemble import RandomForestClassifier
 
 rf_model = RandomForestClassifier(

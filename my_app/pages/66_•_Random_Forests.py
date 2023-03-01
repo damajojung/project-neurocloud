@@ -137,7 +137,7 @@ dir = os.getcwd()
 data_dir = dir + "/app_data/possum.csv"
 
 
-@st.cache
+@st.cache_data
 def load_data(path):
     data = pd.read_csv(path)
     return data
@@ -172,23 +172,41 @@ Let us predict the sex of a possum with a Random Forest. This is done in the fol
 """
 )
 
-
 st.header("Random Forest for Classification")
 
 from sklearn.ensemble import RandomForestClassifier
 
 rf_model = RandomForestClassifier(
-    n_estimators=1000, max_features="auto", random_state=42
+    n_estimators=500, max_features="auto", random_state=42
 )
 rf_model.fit(X_train, y_train)
 
 
 predictions = rf_model.predict(X_test)
 comparison = pd.DataFrame({"Predictions": predictions, "Actual": np.array(y_test)})
+
+st.markdown(
+    r"""
+As always, one can start by simply creating a Random Forest and look what happens. If we let a Random Forest grow with 500 trees and no restrictions we get the following 
+predictions:
+"""
+)
+
 st.dataframe(comparison)
 
+st.markdown(r"""And the following metrics: """)
+
 accuracy = accuracy_score(y_test, predictions)
-st.write(accuracy)
+precision = precision_score(y_test, predictions, average="binary", pos_label="m")
+recall = recall_score(y_test, predictions, average="binary", pos_label="m")
+st.write("Accuracy:", np.round(accuracy, 2))
+st.write("Precision:", np.round(precision, 2))
+st.write("Recall:", np.round(recall, 2))
+
+st.markdown(
+    r"""Well, it's not too bat but not great either. This can be improved by tweaking several hyperparameter tuning methods. But let's first shed some light into the 
+    forest. We can plot all the 500 trees which is of little help. Therefore, let us quickly check the first three tress in order to grasp what is going on under the hood."""
+)
 
 # Export the first three decision trees from the forest
 
@@ -199,6 +217,12 @@ for i in range(3):
         tree_for, feature_names=X_train.columns, filled=True, rounded=True, max_depth=2
     )
     st.pyplot(fig)
+
+st.markdown(
+    r"""
+As we can see, the trees are being built randomly and without any restrictions. In order to have a nice overview, I cut of the deep branches of the tree for the plot. 
+"""
+)
 
 cm = confusion_matrix(y_test, predictions, labels=rf_model.classes_)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=rf_model.classes_)
@@ -217,6 +241,12 @@ while i < len(columns):
     )
     i += 1
 
+st.markdown(
+    r"""
+But we can also do a grid search in order to find the best combination. 
+
+"""
+)
 
 ####### Cross Validation
 

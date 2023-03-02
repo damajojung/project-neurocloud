@@ -204,7 +204,7 @@ st.write("Precision:", np.round(precision, 2))
 st.write("Recall:", np.round(recall, 2))
 
 st.markdown(
-    r"""Well, it's not too bat but not great either. This can be improved by tweaking several hyperparameter tuning methods. But let's first shed some light into the 
+    r"""Well, it's not too bad but not great either. This can be improved by tweaking several hyperparameters of the model. But let's first shed some light into the 
     forest. We can plot all the 500 trees which is of little help. Therefore, let us quickly check the first three tress in order to grasp what is going on under the hood."""
 )
 
@@ -220,7 +220,9 @@ for i in range(3):
 
 st.markdown(
     r"""
-As we can see, the trees are being built randomly and without any restrictions. In order to have a nice overview, I cut of the deep branches of the tree for the plot. 
+As we can see, the trees are being built randomly and without any restrictions. In order to have a nice overview, I cut off the deep branches of the tree for the plot. However,
+since I did not specify any restrctions on the growth of the forest, these trees are grown to the fully extend. In addition to the metrics shown above we can take a look
+at the confusion matrix which looks as follows:
 """
 )
 
@@ -231,19 +233,30 @@ disp.plot(ax=ax)
 
 st.pyplot(fig)
 
-importances = rf_model.feature_importances_
-columns = X.columns
-i = 0
+st.markdown(
+    r"""
+Moreover, we can also take a look at the importance values for each variable over the whole random forest to get an idea which variables are important for the classification
+task and which are of less importance. We can see that the head length and the eye size seem to be the most important variables. 
 
-while i < len(columns):
-    st.caption(
-        f"The importance of feature {columns[i]} is {round(importances[i] * 100,2)} %."
-    )
-    i += 1
+"""
+)
+
+# Create a series containing feature importances from the model and feature names from the training data
+feature_importances = pd.Series(
+    rf_model.feature_importances_, index=X_train.columns
+).sort_values(ascending=False)
+
+# Plot a simple bar chart
+fig = plt.figure(figsize=(15, 10))
+feature_importances.plot.bar()
+st.pyplot(fig)
+
+st.header("""Grid Search """)
 
 st.markdown(
     r"""
-But we can also do a grid search in order to find the best combination. 
+But we can also do a grid search in order to find the best combination within a certain range. For example, we can look for the number of trees in a forest between 50 and
+500 with a tree depth of 1 to 20 which leads to the following optimal hyperparameters.
 
 """
 )
@@ -286,3 +299,14 @@ feature_importances = pd.Series(
 fig = plt.figure(figsize=(15, 10))
 feature_importances.plot.bar()
 st.pyplot(fig)
+
+st.markdown(
+    r"""
+However, we can see that this gridsearch did not improve the results by a large margin. Therefore, it can be advisable to use the boosted variants which will be discassed in the
+following section. 
+"""
+)
+
+
+st.header("XGBoost" "")
+

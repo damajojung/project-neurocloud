@@ -302,11 +302,8 @@ st.pyplot(fig)
 
 st.markdown(
     r"""
-However, we can see that this gridsearch did not improve the results by a large margin. Therefore, it can be advisable to use the boosted variants which will be discassed in the
-following section. 
+However, we can see that this gridsearch did not improve the results by a large margin. Therefore, it can be advisable to use the boosted variants which follows the exact same 
+procedure as we have seen bafore. Just the engine is differnt. 
 """
 )
-
-
-st.header("XGBoost" "")
 

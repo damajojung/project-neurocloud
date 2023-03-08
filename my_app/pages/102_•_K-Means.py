@@ -11,22 +11,7 @@ from sklearn.datasets import make_blobs
 
 st.set_page_config(layout="wide")
 
-st.title("K-Means Cluster")
-
-st.markdown(
-    """
-K-Means Cluster.
-"""
-)
-
-blob_centers = np.array(
-    [[-0.5, -0.5], [-1.5, 2.5], [-3.0, 0.5], [-3.3, 2.8], [-2.7, -1.0]]
-)
-blob_std = np.array([0.3, 0.3, 0.15, 0.3, 0.2])
-
-X, y = make_blobs(
-    n_samples=2000, centers=blob_centers, cluster_std=blob_std, random_state=7
-)
+#### Funtions
 
 
 def plot_clusters(X, y=None):
@@ -35,29 +20,21 @@ def plot_clusters(X, y=None):
     plt.ylabel("$x_2$", fontsize=14, rotation=0)
 
 
-fig = plt.figure(figsize=(8, 4))
-plot_clusters(X)
-st.pyplot(fig)
+def plot_clusterer_comparison(clusterer1, clusterer2, X, title1=None, title2=None):
+    clusterer1.fit(X)
+    clusterer2.fit(X)
 
-######
+    plt.figure(figsize=(10, 3.2))
 
-from sklearn.cluster import KMeans
+    plt.subplot(121)
+    plot_decision_boundaries(clusterer1, X)
+    if title1:
+        plt.title(title1, fontsize=14)
 
-k = 5
-kmeans = KMeans(n_clusters=k, random_state=42)
-y_pred = kmeans.fit_predict(X)
-
-st.caption(y_pred)
-st.caption(y_pred is kmeans.labels_)
-
-# The following 5 centroid were calculated:
-kmeans.cluster_centers_
-
-kmeans.labels_
-
-# Predict the labels for new instances
-X_new = np.array([[0, 2], [3, 2], [-3, 3], [-3, 2.5]])
-kmeans.predict(X_new)
+    plt.subplot(122)
+    plot_decision_boundaries(clusterer2, X, show_ylabels=False)
+    if title2:
+        plt.title(title2, fontsize=14)
 
 
 def plot_data(X):
@@ -122,6 +99,51 @@ def plot_decision_boundaries(
         plt.ylabel("$x_2$", fontsize=14, rotation=0)
     else:
         plt.tick_params(labelleft=False)
+
+
+#### End Functions
+
+st.title("K-Means Cluster")
+
+st.markdown(
+    """
+K-Means Cluster.
+"""
+)
+
+blob_centers = np.array(
+    [[-0.5, -0.5], [-1.5, 2.5], [-3.0, 0.5], [-3.3, 2.8], [-2.7, -1.0]]
+)
+blob_std = np.array([0.3, 0.3, 0.15, 0.3, 0.2])
+
+X, y = make_blobs(
+    n_samples=2000, centers=blob_centers, cluster_std=blob_std, random_state=7
+)
+
+
+fig = plt.figure(figsize=(8, 4))
+plot_clusters(X)
+st.pyplot(fig)
+
+######
+
+from sklearn.cluster import KMeans
+
+k = 5
+kmeans = KMeans(n_clusters=k, random_state=42)
+y_pred = kmeans.fit_predict(X)
+
+st.caption(y_pred)
+st.caption(y_pred is kmeans.labels_)
+
+# The following 5 centroid were calculated:
+kmeans.cluster_centers_
+
+kmeans.labels_
+
+# Predict the labels for new instances
+X_new = np.array([[0, 2], [3, 2], [-3, 3], [-3, 2.5]])
+kmeans.predict(X_new)
 
 
 fig = plt.figure(figsize=(8, 4))

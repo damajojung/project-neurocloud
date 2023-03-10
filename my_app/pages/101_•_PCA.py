@@ -19,6 +19,20 @@ st.set_page_config(layout="wide")
 
 st.title("PCA")
 
+st.header("The curse of Dimensionality")
+
+st.markdown(
+    r"""
+In a world of big data, one is pretty quickyl confronted with datasets that contain thousand if now even millions of features for earch training instance.
+Thus, training can become really slow and finding a good solution hard. This problem is called *The curse of dimensionality*. Moreover, apart from 
+reducing running times during training, dimensionality reduction is also very beneficial for data vizualisation. Reducing the dimensions down to
+two or three dimensions allows one to plot the data and potentially detect any clusters or patterns within the data. DataViz is crucial for communicating
+your conclusions to people who do not have a background in data science. We will take a look at one of the most common dimensionality reduction techniques
+within data science, namely *Principle Component Analysis*. 
+
+"""
+)
+
 st.markdown(
     """
 PCA - Principal Component Analysis. Data must be standardised with mean 0 and standard deviation of 1.

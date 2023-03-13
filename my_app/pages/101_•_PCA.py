@@ -48,8 +48,9 @@ Learning*. The underlying assumption is calles *manifold hypothesis* which holds
 
 st.markdown(
     r"""
-PCA - Principal Component Analysis. Data must be standardised with mean 0 and standard deviation of 1.
-And only numerical data works. 
+PCA first identifies the hyperplane that lies closest to the data and then it projects the data onto it. In order to preserve as much as possible from the variance
+of the data one has to find the right hyperplane. This can be done by minimizing the mean squared distance between the original dataset and its projection onto the axis
+it is projected on. This is basically the main concept behind PCA. 
 """
 )
 

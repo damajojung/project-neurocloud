@@ -33,8 +33,21 @@ within data science, namely *Principle Component Analysis*.
 """
 )
 
+st.header("Two approaches of dimensionality reduction")
+
 st.markdown(
-    """
+    r"""
+There are currently two main approaches when it comes to dimensionality reduction, namely **Projection** and **Manifold Learning**. The former one takes for example 3D data and 
+projects it down to two dimensions. Imagine a parabola in 3D which can easily be projected down to a plane. In certain cases this approach works just fine. However,
+you can imagine that not all data sets are as simple as a parabola. If the data overlaps along the axis one likes to project the data you loose a lot of information. Therefore, 
+manifold learning is more bulletproof. Many dimensionality reductions algorithms work by modeling the manifold on which the training instances lie which is calles *Manifold
+Learning*. The underlying assumption is calles *manifold hypothesis* which holds that most real-world-high-dimensional datasets lie close to a much lower-dimensional manifold. 
+*Principal Component Analysis (PCA)* is by far the most populat dimensionality reduction algorithm and is discussed in the following section.
+"""
+)
+
+st.markdown(
+    r"""
 PCA - Principal Component Analysis. Data must be standardised with mean 0 and standard deviation of 1.
 And only numerical data works. 
 """

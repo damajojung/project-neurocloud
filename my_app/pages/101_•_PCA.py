@@ -33,7 +33,7 @@ within data science, namely *Principle Component Analysis*.
 """
 )
 
-st.header("Two approaches of dimensionality reduction")
+st.header("Two Approaches for Dimensionality Reduction")
 
 st.markdown(
     r"""
@@ -50,7 +50,18 @@ st.markdown(
     r"""
 PCA first identifies the hyperplane that lies closest to the data and then it projects the data onto it. In order to preserve as much as possible from the variance
 of the data one has to find the right hyperplane. This can be done by minimizing the mean squared distance between the original dataset and its projection onto the axis
-it is projected on. This is basically the main concept behind PCA. 
+it is projected on. This is basically the main concept behind PCA. We will not shed light onto the mathemtatics behind PCA here since there are plenty of helpful 
+recourses for that. However, we will take a look at an example. 
+"""
+)
+
+st.header("Dimensionality Reduction for Wine Data")
+
+st.markdown(
+    r"""
+We use another very commong data set within the data scienc world which is the wine dataset. It consists of 13 variables and 178 samples and contains 3 classes of wine.
+I certainly do like to drink wine, but those chemicals within the data do not say that much to me. However, as mentioned before, It can be very helpful to reduce
+the dimensionality of the data in order to make some DataViz and to identify any clusters. Let's go through it step by step. 
 """
 )
 
@@ -62,15 +73,35 @@ data = load_wine(as_frame=True)
 X = data.frame.loc[:, :]
 y = data.frame.iloc[:, -1:]
 
+st.subheader("1.) Take a look at the data")
+
+st.markdown(
+    r"""
+It's always advisable to take a look at the data first. Besides the target variable, all the other ones are of numerical nature. This is important
+since PCA only works with numerical data. However, we can see that the data is not yet centered around the origin and scaled to unit variance. This is important. Even though
+Scikit learn does center the data and scale it automatically for us, we'll do it by hand this time in order to see each step."""
+)
+
 # Display the data
 st.dataframe(X)
 
 # Standardise everythinbg - Mean 0, standard deviation 1
 from sklearn.preprocessing import StandardScaler
 
+st.subheader("2.) Center and scale the Data")
+
+st.markdown(
+    r"""
+Centering the data around the origin plus scaling can easily be done with `StandardScaler().fit_transform(X)` and the result looks as follows:"""
+)
+
 # Standardizing the features
 x = StandardScaler().fit_transform(X)
 st.dataframe(x)
+
+st.markdown(
+    r"Please note that the target variable has been excluded from this procedure."
+)
 
 # PCA
 from sklearn.decomposition import PCA
@@ -82,7 +113,24 @@ principalDf = pd.DataFrame(data=principalComponents, columns=["PC1", "PC2"])
 # Merge
 final_df = pd.concat([principalDf, y], axis=1)
 
+st.subheader("3.) Conducting PCA")
+
+st.markdown(
+    r"""
+Now, all we have to to is to specify to how many dimensions we would like to reduce the data set to by using `PCA(n_components=2)`. And then, we can feed the
+data into it with `pca.fit_transform(x)`. Lastly, one has to add the target variable to the PCA variables which looks as follows:"""
+)
+
 st.dataframe(final_df)
+
+st.subheader("4.) Plot the results")
+
+st.markdown(
+    r"""
+Finally, we can plot the data and color it by their target value. We can see that PCA was able to find a solutions that allows us to visualize a 13 dimensional data set
+onto a two dimensional plane. Now, one can conduct further analysis if he or she wishes to do so.
+"""
+)
 
 # Display everything
 fig, ax = plt.subplots(1, figsize=(15, 10))

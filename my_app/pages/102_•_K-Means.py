@@ -103,11 +103,19 @@ def plot_decision_boundaries(
 
 #### End Functions
 
-st.title("K-Means Cluster")
+st.title("K-Means")
 
 st.markdown(
-    """
-K-Means Cluster.
+    r"""
+K-means clustering is a widely used unsupervised machine learning algorithm that aims to partition a given dataset into K distinct, 
+non-overlapping clusters based on the similarity of the data points. The algorithm works by iteratively assigning each data point to one of the 
+K clusters and then computing the centroid of each cluster based on the mean of all the points assigned to that cluster. The centroids then become 
+the new centers of the clusters, and the process is repeated until the centroids no longer move or a maximum number of iterations is reached.
+
+The k-means algorithm is commonly used in various applications, including image segmentation, market segmentation, customer segmentation, and anomaly
+ detection. It is a fast and efficient algorithm that can handle large datasets and is relatively easy to implement. However, it also has some 
+ limitations, such as its sensitivity to the initial choice of centroids and its tendency to converge to a local minimum rather than the global 
+ minimum.
 """
 )
 

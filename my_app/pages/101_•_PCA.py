@@ -59,7 +59,7 @@ st.header("Dimensionality Reduction for Wine Data")
 
 st.markdown(
     r"""
-We use another very commong data set within the data scienc world which is the wine dataset. It consists of 13 variables and 178 samples and contains 3 classes of wine.
+We use another very commong data set within the data science world which is the wine dataset. It consists of 13 variables and 178 samples and contains 3 classes of wine.
 I certainly do like to drink wine, but those chemicals within the data do not say that much to me. However, as mentioned before, It can be very helpful to reduce
 the dimensionality of the data in order to make some DataViz and to identify any clusters. Let's go through it step by step. 
 """

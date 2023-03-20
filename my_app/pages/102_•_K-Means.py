@@ -146,7 +146,9 @@ st.header("Example")
 
 st.markdown(
     r"""
-Here we can see an unlabeled data set composed of five blobs of data. 
+Here we can see an unlabeled data set composed of five blobs of data. With the help of k-means it should be pretty easy to find five clusters. Let's run sklearn's
+k-means algorhitm on the data by using `KMeans(n_clusters=5, random_state=42)` and take a look at the result. Please note that $k$ must be specified beforehand and
+if one wishes to optain reproducable results, one should also specify a seed.
 """
 )
 blob_centers = np.array(
@@ -171,12 +173,15 @@ k = 5
 kmeans = KMeans(n_clusters=k, random_state=42)
 y_pred = kmeans.fit_predict(X)
 
-st.caption(y_pred)
-st.caption(y_pred is kmeans.labels_)
+# st.caption(y_pred)
+# st.caption(y_pred is kmeans.labels_) # True
 
 # The following 5 centroid were calculated:
+
+st.markdown(r"""We get the following five centroids:""")
 kmeans.cluster_centers_
 
+st.markdown(r"""with the following predictions for every sample:""")
 kmeans.labels_
 
 # Predict the labels for new instances
@@ -184,6 +189,7 @@ X_new = np.array([[0, 2], [3, 2], [-3, 3], [-3, 2.5]])
 kmeans.predict(X_new)
 
 
+st.markdown(r"""Which results in the following solution:""")
 fig = plt.figure(figsize=(8, 4))
 plot_decision_boundaries(kmeans, X)
 st.pyplot(fig)

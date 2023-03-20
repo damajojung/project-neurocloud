@@ -115,10 +115,40 @@ the new centers of the clusters, and the process is repeated until the centroids
 The k-means algorithm is commonly used in various applications, including image segmentation, market segmentation, customer segmentation, and anomaly
  detection. It is a fast and efficient algorithm that can handle large datasets and is relatively easy to implement. However, it also has some 
  limitations, such as its sensitivity to the initial choice of centroids and its tendency to converge to a local minimum rather than the global 
- minimum.
+ minimum. Let's explore k-Means with an example. 
 """
 )
 
+st.header("Theory")
+
+st.markdown(
+    r"""
+
+The theory behind k-means is fairly simple. 
+
+* Choose the number of clusters (k) you want to create.
+* Randomly assign each data point to a cluster.
+* Calculate the centroid (mean) of each cluster.
+* Reassign each data point to the cluster whose centroid is closest.
+* Repeat steps 3-4 until the clusters no longer change or a maximum number of iterations is reached.
+* Optionally, use various metrics to evaluate the quality of the resulting clustering.
+
+The commonly performance measurement looks as follows:
+
+$\sum^{n}_{i = 1} (x_i - z_i)^2 = minimal$
+
+where $z_i$ is the centroid that is closest to the sample $i$. Important: The solution for the performance measurement is not convex! Meaning:
+The solution has some randomness in it and is dependent on the initialisation. We'll get back to that later. Let us explore it with an example.
+"""
+)
+
+st.header("Example")
+
+st.markdown(
+    r"""
+Here we can see an unlabeled data set composed of five blobs of data. 
+"""
+)
 blob_centers = np.array(
     [[-0.5, -0.5], [-1.5, 2.5], [-3.0, 0.5], [-3.3, 2.8], [-2.7, -1.0]]
 )

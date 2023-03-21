@@ -101,6 +101,23 @@ def plot_decision_boundaries(
         plt.tick_params(labelleft=False)
 
 
+def plot_clusterer_comparison(clusterer1, clusterer2, X, title1=None, title2=None):
+    clusterer1.fit(X)
+    clusterer2.fit(X)
+
+    # plt.figure(figsize=(10, 3.2))
+
+    plt.subplot(121)
+    plot_decision_boundaries(clusterer1, X)
+    if title1:
+        plt.title(title1, fontsize=14)
+
+    plt.subplot(122)
+    plot_decision_boundaries(clusterer2, X, show_ylabels=False)
+    if title2:
+        plt.title(title2, fontsize=14)
+
+
 #### End Functions
 
 st.title("K-Means")
@@ -205,10 +222,20 @@ clearly seen from a plot? And what about the randomnees of the centroids initali
 """
 )
 
+### Additional Exploration
+
+st.title("Finding the right k (amount of clusters)")
+
+
+kmeans_k3 = KMeans(n_clusters=3, random_state=42)
+kmeans_k8 = KMeans(n_clusters=8, random_state=42)
+
+fig, ax = plt.subplots(figsize=(8, 3.5))
+plot_clusterer_comparison(kmeans_k3, kmeans_k8, X, "$k=3$", "$k=8$")
+st.pyplot(fig)
 
 ###
 
-st.title("Finding the right k (amount of clusters)")
 
 kmeans_per_k = [KMeans(n_clusters=k, random_state=42).fit(X) for k in range(1, 10)]
 inertias = [model.inertia_ for model in kmeans_per_k]
@@ -228,6 +255,25 @@ plt.annotate(
 plt.axis([1, 8.5, 0, 1300])
 st.pyplot(fig)
 
+
+st.title("Centroid initialisation")
+
+kmeans_rnd_init1 = KMeans(
+    n_clusters=5, init="random", n_init=1, algorithm="full", random_state=2
+)
+kmeans_rnd_init2 = KMeans(
+    n_clusters=5, init="random", n_init=1, algorithm="full", random_state=5
+)
+
+fig, ax = plt.subplots(figsize=(8, 3.5))
+plot_clusterer_comparison(
+    kmeans_rnd_init1,
+    kmeans_rnd_init2,
+    X,
+    "Solution 1",
+    "Solution 2 (with a different random init)",
+)
+st.pyplot(fig)
 
 # Using Clustering for Image Segmentation could be something that could be interesting to look at
 

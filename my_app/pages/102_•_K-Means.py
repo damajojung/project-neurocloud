@@ -138,7 +138,8 @@ The commonly performance measurement looks as follows:
 $\sum^{n}_{i = 1} (x_i - z_i)^2 = minimal$
 
 where $z_i$ is the centroid that is closest to the sample $i$. Important: The solution for the performance measurement is not convex! Meaning:
-The solution has some randomness in it and is dependent on the initialisation. We'll get back to that later. Let us explore it with an example.
+The algorithm is guanranteed to converge, it is not guaranteed that it will converge to the right solution (i.e. it might converge to a local optimum). This all depends 
+on the random initialisation of the centroids in the beginning. We'll get back to that later. Let us explore it with an example.
 """
 )
 
@@ -154,7 +155,7 @@ if one wishes to optain reproducable results, one should also specify a seed.
 blob_centers = np.array(
     [[-0.5, -0.5], [-1.5, 2.5], [-3.0, 0.5], [-3.3, 2.8], [-2.7, -1.0]]
 )
-blob_std = np.array([0.3, 0.3, 0.15, 0.3, 0.2])
+blob_std = np.array([0.3, 0.4, 0.15, 0.15, 0.2])
 
 X, y = make_blobs(
     n_samples=2000, centers=blob_centers, cluster_std=blob_std, random_state=7
@@ -178,10 +179,10 @@ y_pred = kmeans.fit_predict(X)
 
 # The following 5 centroid were calculated:
 
-st.markdown(r"""We get the following five centroids:""")
+st.markdown(r"""After running the code we get the following five centroids:""")
 kmeans.cluster_centers_
 
-st.markdown(r"""with the following predictions for every sample:""")
+st.markdown(r"""with the following clusters for every sample:""")
 kmeans.labels_
 
 # Predict the labels for new instances
@@ -193,6 +194,16 @@ st.markdown(r"""Which results in the following solution:""")
 fig = plt.figure(figsize=(8, 4))
 plot_decision_boundaries(kmeans, X)
 st.pyplot(fig)
+
+st.markdown(
+    r"""
+
+Please note that the big X in the middle of the blogs represent the centroids. Overall, the results look pretty good. Only a few sample were probably mislabeled.
+Take a closer look at the boundary between both top clusters. This is a common problem when the k-means algorithm is faced with blobs of different diameters of blobs since
+it only cares about the distance to the centroids. Well, there are now two questions in the room that must be adressed. How does one find the right $k$ if it can not be
+clearly seen from a plot? And what about the randomnees of the centroids initalisation? 
+"""
+)
 
 
 ###

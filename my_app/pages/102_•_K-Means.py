@@ -300,7 +300,7 @@ plot_clusterer_comparison(
 )
 st.pyplot(fig)
 
-st.markdwown(
+st.markdown(
     r"""
 So how can we solve this? If you happen to know approximately where the centroids should be located, then you can set the init hyperparameter to a NumPy array 
 containing the list of centroids, and set n_init to 1. This ensures that the algorithm starts roughly at the right position. Another solution is to run the algorithm

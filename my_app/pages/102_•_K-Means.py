@@ -275,6 +275,14 @@ st.pyplot(fig)
 
 st.title("Centroid initialisation")
 
+st.markdown(
+    r"""
+
+Another crutial part about k-means is the centroid initialisation. Normally, the centroids are selected randomly at the beginning. However, you can see in the following
+figure that the result can be very different with a different initialisation. 
+"""
+)
+
 kmeans_rnd_init1 = KMeans(
     n_clusters=5, init="random", n_init=1, algorithm="full", random_state=2
 )
@@ -291,6 +299,15 @@ plot_clusterer_comparison(
     "Solution 2 (with a different random init)",
 )
 st.pyplot(fig)
+
+st.markdwown(
+    r"""
+So how can we solve this? If you happen to know approximately where the centroids should be located, then you can set the init hyperparameter to a NumPy array 
+containing the list of centroids, and set n_init to 1. This ensures that the algorithm starts roughly at the right position. Another solution is to run the algorithm
+multiple times and keep the best solution by analysing the inertia value. The number of random initializations is controlled by the n_init hyperparameter: by default, 
+it is equal to 10, which means that the whole algorithm described earlier runs 10 times when you call fit(), and Scikit- Learn keeps the best solution.
+"""
+)
 
 # Using Clustering for Image Segmentation could be something that could be interesting to look at
 

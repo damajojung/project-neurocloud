@@ -226,6 +226,14 @@ clearly seen from a plot? And what about the randomnees of the centroids initali
 
 st.title("Finding the right k (amount of clusters)")
 
+st.markdown(
+    r"""
+
+We have seen that getting k-means up and running with an obvious example is straight forward. But if we have more dimensions where it is not possible to visualise it we
+need a different approach for selecting a good value for k because the algorithm alsways finds a solution for us which can be seen in the following figure where we use
+the same data but use $k = 3$ and $k = 8$. 
+"""
+)
 
 kmeans_k3 = KMeans(n_clusters=3, random_state=42)
 kmeans_k8 = KMeans(n_clusters=8, random_state=42)
@@ -234,8 +242,13 @@ fig, ax = plt.subplots(figsize=(8, 3.5))
 plot_clusterer_comparison(kmeans_k3, kmeans_k8, X, "$k=3$", "$k=8$")
 st.pyplot(fig)
 
-###
+### Elbow plot
 
+st.markdown(
+    r"""
+
+"""
+)
 
 kmeans_per_k = [KMeans(n_clusters=k, random_state=42).fit(X) for k in range(1, 10)]
 inertias = [model.inertia_ for model in kmeans_per_k]

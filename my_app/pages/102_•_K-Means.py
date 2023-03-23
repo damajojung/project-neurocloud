@@ -150,7 +150,7 @@ The theory behind k-means is fairly simple.
 * Repeat steps 3-4 until the clusters no longer change or a maximum number of iterations is reached.
 * Optionally, use various metrics to evaluate the quality of the resulting clustering.
 
-The commonly performance measurement looks as follows:
+The commonly performance measurement looks as follows and is called inertia:
 
 $\sum^{n}_{i = 1} (x_i - z_i)^2 = minimal$
 
@@ -246,7 +246,11 @@ st.pyplot(fig)
 
 st.markdown(
     r"""
-
+With the help of the computed inertia it is possible to find an optimal k. But answer is not as straight forwards as it might appear. You would think that the lowest ineria
+score is the best, right? Yeah, this is kind of true, but the problem is that the inertia score decreases with bigger k. Therefore, one should choose a score wich decreases
+the inertia sccore enough to an acceptable level but does not overfit. We can plot the scores for different k's which can be seen in the following figure. A good k is
+where you can see a knick in the plot which is called the elbow since it resembles to an arm. Any lower k would be bad since inertia could be decreased a lot simply by
+going one or two higher and any higher value would not help that much either. However, the knick must be clearly visible in order to find a good k. 
 """
 )
 

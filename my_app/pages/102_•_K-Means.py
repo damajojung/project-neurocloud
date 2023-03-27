@@ -309,5 +309,12 @@ it is equal to 10, which means that the whole algorithm described earlier runs 1
 """
 )
 
-# Using Clustering for Image Segmentation could be something that could be interesting to look at
+st.title("""K-means and Images""")
+
+
+from PIL import Image
+
+image = Image.open("app_data/k_means_tulip.png")
+
+st.image(image, caption="K-means on tulip")
 

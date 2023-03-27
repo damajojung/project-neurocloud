@@ -316,5 +316,28 @@ from PIL import Image
 
 image = Image.open("app_data/k_means_tulip.png")
 
+st.markdown(
+    r"""
+Image segmentation is the process of dividing an image into multiple regions or segments, each of which represents a different object or region of interest within the image.
+ The goal of image segmentation is to simplify or change the representation of an image into something that is easier and more meaningful to analyze.
+
+In other words, image segmentation is a technique used in computer vision and image processing to identify and extract objects or regions of interest from an image. It 
+can be used for a variety of applications, such as object recognition, image editing, medical imaging, and autonomous driving.
+
+There are various approaches to image segmentation, including thresholding, edge detection, region growing, and clustering. Each approach has its own advantages and 
+disadvantages and can be selected based on the specific requirements of the application.
+
+However, we are interested in color segmentation. Color segmentation is a specific type of image segmentation that involves segmenting an image based on its color 
+information. In color segmentation, an image is divided into multiple segments or regions based on the colors present in the image.
+
+Color segmentation is a popular approach for image segmentation in computer vision and image processing applications, as color is a prominent visual feature that can be 
+used to distinguish between different objects or regions of interest within an image.
+
+The following figure show k-means with different $k$ on the same image. We can see that orange tulip in the background is replace be green and violet going from $k=6$
+to $k=4$ since it is a small cluster. 
+
+"""
+)
+
 st.image(image, caption="K-means on tulip")
 

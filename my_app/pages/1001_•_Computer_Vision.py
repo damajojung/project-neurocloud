@@ -8,7 +8,7 @@ st.title("Computer Vision")
 
 st.markdown(
     """
-Computer Vision.
+Deep Computer Vision using CNN - Page 445 onwards
 """
 )
 

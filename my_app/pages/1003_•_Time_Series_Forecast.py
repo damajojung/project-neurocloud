@@ -8,7 +8,7 @@ st.title("Time Series Analysis")
 
 st.markdown(
     """
-Time Series Analysis.
+Processing Sequences using RNN and CNN - Page 497 onwards
 """
 )
 

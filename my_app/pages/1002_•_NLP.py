@@ -8,7 +8,7 @@ st.title("NLP")
 
 st.markdown(
     """
-NLP.
+Natural Language Processing with RNN - Page 525 onwards
 """
 )
 

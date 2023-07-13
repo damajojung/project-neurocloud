@@ -7,4 +7,4 @@ Note to myself:
 - streamlit run streamlit_app.py   
 - control + c    
 
-Letzter Punkt dient zur Schliesslung der App.
+Letzter Punkt dient zur Schliessung der App.
